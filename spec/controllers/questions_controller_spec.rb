@@ -57,9 +57,9 @@ RSpec.describe QuestionsController, type: :controller do
     context'with valid attrs' do
       it 'saves the new question in DB' do
         # old_count = Question.count
-        # post :create, attributes_for(:question) #gets parameter hash from FactoryBot
+        # post :create, params: { question: attributes_for(:question)} #gets parameter hash from FactoryBot
         # expect(Question.count).to eq old_count +1
-        expect { post :create, params: { question: attributes_for(:question) } }
+        expect { post :create, params: { question: attributes_for(:question)} }
                 .to change(Question, :count).by(1)
       end
       it 'redirects to show view' do
@@ -68,7 +68,64 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
     context'invalid object' do
+      it 'does not save the question' do
+        expect { post :create, params: { question: attributes_for(:invalid_question)} }
+        .to_not change(Question, :count)
+      end
+
+      it 're-renders new view' do
+        post :create, params: { question: attributes_for(:invalid_question)}
+        expect(response).to render_template :new
+      end
+    end
+  end
+
+  describe 'Patch #update' do
+    context'with valid attributess' do
+      it 'assigns the requested question to @question'do
+        patch :update, params: {id: question, question: attributes_for(:question)}
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'changes question attributes'do
+        patch :update, params: {id: question, question: {title: "new title", body: "new body"}}
+        question.reload
+
+        expect(question.title).to eq 'new title'
+        expect(question.body).to eq 'new body'
+      end
+
+      it 'redirects to the updated question'do
+        patch :update, params: {id: question, question: {title: "new title", body: "new body"}}
+        expect(response).to redirect_to question
+      end
+    end
+
+    context'with invalid attributess' do
+      before { patch :update, params: {id: question, question: {title: "new title", body: nil}} }
       
+      it 'does not change question attributes' do 
+        question.reload
+        expect(question.title).to eq 'MyString'
+        expect(question.body).to eq 'MyText'
+      end
+
+      it 're-renders edit view' do
+        expect(response).to render_template :edit
+      end
+    end
+  end
+
+  describe 'Delete #destroy' do
+    before {question}
+
+    it 'deletes question' do
+      expect { delete :destroy, params: {id: question} }.to change(Question, :count).by(-1)
+    end
+
+    it 'redirects to index view' do
+      delete :destroy, params: {id: question}
+      expect(response).to redirect_to questions_path
     end
   end
 end
