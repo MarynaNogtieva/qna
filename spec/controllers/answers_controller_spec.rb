@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-
-  let(:answer) { create(:answer) }
-  let(:question) { create(:question) }
+    let(:question) { create(:question) }
+    let(:answer) { create(:answer, question: question) }
+  
   
   describe 'Get #new' do
     before{ get :new, params: { question_id: question} }
@@ -14,6 +14,24 @@ RSpec.describe AnswersController, type: :controller do
     
     it 'render new view' do
       expect(response).to render_template :new
+    end
+  end
+
+  describe 'Post #create' do
+    context'with valid attributes' do
+
+        it 'should save @answer to DB' do
+          expect { post :create, params: { question_id: question, answer: attributes_for(:question) } }
+          .to change(question.answers, :count).by(1)
+        end
+
+        it 'should redirect to question#show view' do
+          post :create, params: { question_id: question, answer: attributes_for(:question) }
+          expect(response).to redirect_to  question_path(assigns(:question))
+        end
+    end
+
+    context'with invalid attributes' do
     end
   end
 end
