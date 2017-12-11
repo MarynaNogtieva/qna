@@ -29,7 +29,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
   
-  describe 'Get #new' do
+  describe 'GET #new' do
     before { get :new }
     
     it 'assigns a new @uestion to @question' do
@@ -41,7 +41,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
   
-  describe 'Get #edit' do
+  describe 'GET #edit' do
       before { get :edit, params: { id: question } }
       
       it 'assigns the requested question to @question' do
@@ -53,7 +53,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
   end
   
-  describe 'Post #create' do
+  describe 'POST #create' do
     context'with valid attrs' do
       it 'saves the new question in DB' do
         # old_count = Question.count
@@ -80,7 +80,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe 'Patch #update' do
+  describe 'PATCH #update' do
     context'with valid attributess' do
       it 'assigns the requested question to @question'do
         patch :update, params: {id: question, question: attributes_for(:question)}
@@ -116,7 +116,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe 'Delete #destroy' do
+  describe 'DELETE #destroy' do
     before {question}
 
     it 'deletes question' do
