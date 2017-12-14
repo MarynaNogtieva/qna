@@ -62,6 +62,7 @@ RSpec.configure do |config|
 
   #use extend because we use before blok, because before is used as class method in RSpec
   config.extend ControllerMacros, type: :controller
+  config.include AcceptanceHelpers, type: :feature
 end
 
 
