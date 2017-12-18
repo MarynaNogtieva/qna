@@ -29,4 +29,14 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    sign_in_user
+    before { answer }
+
+    it 'deletes answer' do
+      expect { delete :destroy, params: {question_id: question, id: answer} }.to change(Answer, :count).by(-1)
+      expect(response).to redirect_to question_path(assigns(:question))
+    end
+  end
 end

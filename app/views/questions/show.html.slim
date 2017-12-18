@@ -9,9 +9,12 @@ div
 div
   - if @question.answers.present?
     - @question.answers.each do |answer| 
-      p= answer.body
-      p= answer.updated_at.to_s
-      
+      div
+        p= answer.body
+        p= answer.updated_at.to_s
+        - if current_user&.author_of?(answer)
+          p= link_to 'Delete Answer', question_answer_path(@question, answer), method: :delete
+
 
 - if user_signed_in?
   = form_for [ @question, @answer ], remote: true do |form|
