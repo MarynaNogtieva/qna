@@ -1,2 +1,17 @@
-h4= @question.title
-p= @question.body
+= render 'common/errors', resource: @answer
+div
+  h4= @question.title
+  p= @question.body
+
+
+div
+  - if @question.answers.present?
+    - @question.answers.each do |answer| 
+      p= answer.body
+      p= answer.updated_at.to_s
+
+- if user_signed_in?
+  = form_for [ @question, @answer ], remote: true do |form|
+   = form.label :body, 'Your Answer'
+   = form.text_area :body
+   = form.submit 'Answer a question'

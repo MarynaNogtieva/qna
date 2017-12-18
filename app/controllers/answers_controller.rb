@@ -1,15 +1,17 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!
   before_action :load_question, only: [ :create ]
-  def new
-    @answer = Answer.new
-  end
 
   def create
-    @answer = @question.answers.new(answer_params)
+    @answer = current_user.answers.new(answer_params)
+    @answer.question = @question
+
     if @answer.save
+      flash[:notice] = 'Your was created successfully'
       redirect_to question_path(@question)
     else
-      render :new
+      flash[:notice] = 'Something is wrong'
+      render 'questions/show'
     end
   end
 
