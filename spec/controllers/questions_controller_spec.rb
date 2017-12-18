@@ -1,17 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) { create(:question) }
-  
+  let (:user) { create(:user) }
+  let(:question) { create(:question, user: user) }
+
 
   describe 'GET #index' do
-    let(:questions) { create_list(:question, 2) }
-    
+    let(:questions) { create_list(:question, 2, user: user) }
+
     before { get :index }
     it 'populates an array of all quetions' do
       expect(assigns(:questions)).to match_array(questions)
     end
-    
+
     it 'renders index view' do
       expect(response).to render_template :index
     end
@@ -19,21 +20,21 @@ RSpec.describe QuestionsController, type: :controller do
   
   describe 'GET #show' do
     before { get :show, params: { id: question } }
-    
+
     it 'assigns the requested question to @question' do
       expect(assigns(:question)).to eq question
     end
-    
+
     it 'renders show view' do
       expect(response).to render_template :show
     end
   end
-  
+
   describe 'GET #new' do
     sign_in_user
     before { get :new }
     
-    it 'assigns a new @uestion to @question' do
+    it 'assigns a new @question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
     end
     
@@ -100,7 +101,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'redirects to the updated question'do
-        patch :update, params: {id: question, question: {title: "new title", body: "new body"}}
+        patch :update, params: { id: question, question: {title: "new title", body: "new body" } }
         expect(response).to redirect_to question
       end
     end
