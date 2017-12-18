@@ -22,7 +22,7 @@ I want to be able to view list of questions' do
     visit question_path(question)
     answers.each do |answer|
       expect(page).to have_content answer.body
-     end
-     expect(current_path).to eq question_path(question)
+    end
+    expect(current_path).to eq question_path(question)
   end
 end
