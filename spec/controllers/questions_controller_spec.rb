@@ -107,6 +107,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context'with invalid attributess' do
+      before { patch :update, params: {id: question, question: {title: 'MyString', body: 'MyText'}} }
       before { patch :update, params: {id: question, question: {title: "new title", body: nil}} }
       
       it 'does not change question attributes' do 
@@ -122,6 +123,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
+    
     sign_in_user
     before {question}
 
@@ -132,6 +134,13 @@ RSpec.describe QuestionsController, type: :controller do
     it 'redirects to index view' do
       delete :destroy, params: {id: question}
       expect(response).to redirect_to questions_path
+    end
+
+    it 'cannot delete somebody else answer' do
+      random_user = create(:user)
+      random_question = create(:question, user: random_user)
+
+      expect { delete :destroy, params: {id: random_question} }.to_not change(user.questions, :count)
     end
   end
 end
