@@ -7,7 +7,6 @@ div
 
 
 div
-  - if @question.answers.present?
     - @question.answers.each do |answer| 
       div
         p= answer.body
