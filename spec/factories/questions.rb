@@ -5,6 +5,7 @@ FactoryBot.define do
   end
 
   factory :question do
+    association :user, factory: :user
     sequence(:title) { |n| "Title #{n}" }
     sequence(:body) { |n| "MyText #{n}" }
 
