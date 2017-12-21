@@ -26,7 +26,6 @@ feature 'User sign up', '
     click_on 'Sign up'
 
     expect(page).to have_content '2 errors prohibited this user from being saved:'
-    expect(current_path).to eq '/users'
     expect(page).to_not have_link 'Logout'
   end
 end
