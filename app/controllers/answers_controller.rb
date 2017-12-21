@@ -21,7 +21,7 @@ class AnswersController < ApplicationController
       @answer.destroy
       flash[:notice] = 'Your answer was successfully deleted.'
     else
-      flash[:notice] = 'Something went wrong'
+      flash[:notice] = 'You dont have a right to delete this answer'
     end
     redirect_to question_path(@question)
   end

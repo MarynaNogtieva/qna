@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let (:user) { create(:user) }
+  let(:user) { @user || create(:user) }
   let(:question) { create(:question, user: user) }
 
 
@@ -123,12 +123,11 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    
     sign_in_user
     before {question}
 
     it 'deletes question' do
-      expect { delete :destroy, params: {id: question} }.to change(Question, :count).by(-1)
+      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
     end
 
     it 'redirects to index view' do
@@ -140,7 +139,7 @@ RSpec.describe QuestionsController, type: :controller do
       random_user = create(:user)
       random_question = create(:question, user: random_user)
 
-      expect { delete :destroy, params: {id: random_question} }.to_not change(user.questions, :count)
+      expect { delete :destroy, params: {id: random_question} }.to_not change(Question, :count)
     end
   end
 end

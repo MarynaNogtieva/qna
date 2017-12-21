@@ -17,7 +17,6 @@ I want to be able to answer their question' do
 
     expect(page).to have_content 'Answer test for the test question'
     expect(page).to have_content 'Your was created successfully'
-    expect(current_path).to eq question_path(question)
   end
 
   scenario 'A user tries to create an answer with invalid attributes' do

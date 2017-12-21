@@ -35,8 +35,12 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
-    flash[:notice] = 'Your question was successfully deleted.'
+    if current_user.author_of?(@question)
+      @question.destroy
+      flash[:notice] = 'Your question was successfully deleted.'
+    else
+      flash[:notice] = 'You dont have the right to delete this quesitonr'
+    end
     redirect_to questions_path
   end
   
