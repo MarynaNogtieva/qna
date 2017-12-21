@@ -6,11 +6,11 @@ FactoryBot.define do
 
   factory :question do
     sequence(:title) { |n| "Title #{n}" }
-    body "MyText"
-  end
+    sequence(:body) { |n| "MyText #{n}" }
 
-  factory :invalid_question, class: "Question" do
-    title nil
-    body nil
+    factory :invalid_question do
+      title nil
+      body nil
+    end
   end
 end
