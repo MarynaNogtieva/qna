@@ -8,7 +8,7 @@ div
 
 div
     - @question.answers.each do |answer| 
-      div
+      div class="answers"
         p= answer.body
         p= answer.updated_at.to_s
         - if current_user&.author_of?(answer)
