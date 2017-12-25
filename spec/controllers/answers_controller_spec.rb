@@ -5,8 +5,6 @@ RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question, user: user) }
   let(:answer) { create(:answer, user: user, question: question) }
 
-  
-  
   describe 'POST #create' do
     sign_in_user
     context'with valid attributes' do
