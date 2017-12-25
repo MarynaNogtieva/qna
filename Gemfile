@@ -34,6 +34,8 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 gem 'slim-rails'
 
+gem 'jquery-rails'
+
 gem 'devise'
 
 group :development, :test do
