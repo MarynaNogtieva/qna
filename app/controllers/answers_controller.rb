@@ -9,10 +9,8 @@ class AnswersController < ApplicationController
 
     if @answer.save
       flash[:notice] = 'Your was created successfully'
-      redirect_to question_path(@question)
     else
-      flash[:notice] = 'Something is wrong'
-      render 'questions/show'
+      render 'errors', notice: 'Something is wrong'
     end
   end
 
