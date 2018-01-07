@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../acceptance_helper'
 
 feature 'Dele answer', '
 In order to delete outdated or incorrect answer

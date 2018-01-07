@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../acceptance_helper'
 
 feature 'View list of questions', '
 In order to find a solution or if my question was asked before
