@@ -48,7 +48,7 @@ group :development, :test do
   gem 'geckodriver-helper'
   # to be able to see how the looks for the user
   gem 'launchy'
-  gem 'selenium-webdriver'
+  gem 'poltergeist'
   gem 'database_cleaner'
 end
 
