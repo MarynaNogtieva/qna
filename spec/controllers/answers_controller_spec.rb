@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:user) { @user || create(:user) }
+  let(:other_user) { create(:user) }
   let(:question) { create(:question, user: user) }
   let(:answer) { create(:answer, user: user, question: question) }
+  let(:other_answer) { create(:answer, user: other_user, question: question) }
 
   describe 'POST #create' do
     sign_in_user
@@ -27,6 +29,43 @@ RSpec.describe AnswersController, type: :controller do
         expect { post :create, params: { question_id: question, format: :js, answer: attributes_for(:invalid_answer)} }
         .to_not change(Answer, :count)
       end
+    end
+  end
+
+  describe 'PATCH #update' do
+    sign_in_user
+    before { answer } #why do we use before here?
+
+    def update_answer(attrs)
+      patch :update, params: {id: answer, question_id: question, answer: attrs, format: :js}
+    end
+
+    it 'assignes requested answer to @answer' do
+      update_answer(attributes_for(:answer))
+      expect(assigns(:answer)).to eq answer
+    end
+
+    it 'assignes @question' do
+      update_answer(attributes_for(:answer))
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'changes question attributes'do
+      patch :update, params: {id: answer, question_id: question, answer:{body: 'updated answer'}, format: :js}
+      answer.reload
+
+      expect(answer.body).to eq 'updated answer'
+    end
+
+    it 'cannot change attributes for the non-author' do
+      patch :update, params: {id: other_answer, question_id: question, answer:{body: 'updated answer'}, format: :js}
+      answer.reload
+      expect(answer.body).to_not eq 'updated answer'
+    end
+
+    it 'renders update template' do 
+      update_answer(attributes_for(:answer))
+      expect(response).to render_template :update
     end
   end
 

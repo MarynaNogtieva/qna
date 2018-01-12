@@ -4,6 +4,10 @@ require 'capybara/poltergeist'
 RSpec.configure do |config|
   Capybara.javascript_driver = :poltergeist
   Capybara.default_max_wait_time = 15
+  options = {js_errors: false}
+  Capybara.register_driver :poltergeist do |app|
+    Capybara::Poltergeist::Driver.new(app, options)
+  end
 
   config.include AcceptanceHelpers, type: :feature
   config.use_transactional_fixtures = false

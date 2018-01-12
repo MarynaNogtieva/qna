@@ -1,5 +1,15 @@
-div 
+div id="answer-id-#{answer.id}"
   p= answer.body
   p= answer.updated_at.to_s
-  - if current_user&.author_of?(answer)
-    p= link_to 'Delete Answer', question_answer_path(@question, answer), method: :delete
+  - if user_signed_in? && current_user&.author_of?(answer)  
+    div
+      /! How to make @answer instead of answer if possible?
+      p= link_to 'Delete Answer', question_answer_path(@question, answer), method: :delete
+      p= link_to 'Edit', '#', class: 'edit-answer-link', data: {answer_id: answer.id}
+      div class="edit-answer" id="edit-answer-#{answer.id}"
+        =form_for [@question, answer], remote: true do |form|
+          div id="answer-errors-#{answer.id}"
+          = form.label :body, 'Your Answer'
+          = form.text_area :body
+          = form.submit 'Save', class: 'btn-save-updated-answer'
+   
