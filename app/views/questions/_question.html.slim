@@ -1,0 +1,15 @@
+h4= question.title
+p= question.body
+- if current_user&.author_of?(question)
+  p= link_to 'Delete Question', question_path(question), method: :delete
+  p= link_to 'Edit Question',nil, class: 'edit-question-link', data: {question_id: @question.id}
+  
+div class="edit-question" id="edit-question-#{question.id}"
+  =form_for question, remote: true do |form|
+    div#question-errors
+    = form.label :title
+    = form.text_field :title
+    = form.label :body, 'Question'
+    = form.text_area :body
+    = link_to 'Cancel', nil, data: { 'cancel-edit-id': question.id }, class: 'btn-cancel-edit-question'
+    = form.submit 'Save', class: 'btn-save-updated-question'

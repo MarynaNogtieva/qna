@@ -1,0 +1,8 @@
+<% if @question.errors.present? %>
+  <% @question.errors.full_messages.each do |message| %>
+    $('#question-errors-<%= @question.id %>').html('<%= j message %>');
+  <% end %>
+<% else %>
+  $('#question-errors-<%= @question.id %>').empty();
+  $('#question-id-<%= @question.id %>').html('<%= j render @question %>');
+<% end %>
