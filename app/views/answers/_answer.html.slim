@@ -11,6 +11,6 @@ div id="answer-id-#{answer.id}"
           div id="answer-errors-#{answer.id}"
           = form.label :body, 'Edit Your Answer'
           = form.text_area :body
-          = link_to 'Cancel', nil, data: { 'cancel-edit-id': answer.id }
+          = link_to 'Cancel', nil, data: { 'cancel-edit-id': answer.id }, class: 'btn-cancel-edit-answer'
           = form.submit 'Save', class: 'btn-save-updated-answer'
    
