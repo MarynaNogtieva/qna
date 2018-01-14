@@ -14,6 +14,4 @@ $(document).on('turbolinks:load',function() {
       editLink.show();
     });
   });
-  
-  
 });
