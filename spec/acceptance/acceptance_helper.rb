@@ -1,13 +1,21 @@
 require 'rails_helper'
 require 'capybara/poltergeist'
+require 'capybara/rspec'
+require 'capybara-screenshot/rspec'
 
 RSpec.configure do |config|
   Capybara.javascript_driver = :poltergeist
-  Capybara.default_max_wait_time = 15
-  options = {js_errors: false}
+ 
+  options = {
+    js_errors: false,
+
+  }
   Capybara.register_driver :poltergeist do |app|
     Capybara::Poltergeist::Driver.new(app, options)
   end
+  Capybara.default_max_wait_time = 30
+  Capybara::Screenshot.autosave_on_failure = true
+  Capybara::Screenshot.prune_strategy = :keep_last_run
 
   config.include AcceptanceHelpers, type: :feature
   config.use_transactional_fixtures = false
