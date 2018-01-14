@@ -8,7 +8,7 @@ $(document).on('turbolinks:load',function() {
     answer.show();
 
     
-    $('.btn-save-updated-answer, .btn-cancel-edit-answer').on('click', function(e) {
+    $('.btn-cancel-edit-answer').on('click', function(e) {
       e.preventDefault();
       answer.hide();
       editLink.show();
