@@ -75,8 +75,7 @@ RSpec.describe AnswersController, type: :controller do
       before { answer }
 
       it 'deletes answer' do
-        expect { delete :destroy, params: {question_id: question, id: answer} }.to change(Answer, :count).by(-1)
-        expect(response).to redirect_to question_path(assigns(:question))
+        expect { delete :destroy, params: {question_id: question, id: answer, format: :js} }.to change(Answer, :count).by(-1)
       end
     end
 
@@ -84,7 +83,7 @@ RSpec.describe AnswersController, type: :controller do
       it 'tries to delete answer' do
         random_user = create(:user)
         somebody_answer = create(:answer, user: random_user, question: question)
-        expect { delete :destroy, params: {question_id: question, id: somebody_answer} }.to_not change(Answer, :count)
+        expect { delete :destroy, params: {question_id: question, id: somebody_answer, format: :js} }.to_not change(Answer, :count)
       end
     end
   end

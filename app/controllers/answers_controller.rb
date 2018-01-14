@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_question, only: [ :create, :destroy ]
+  before_action :load_question, only: [ :create, :destroy]
   before_action :load_answer, only: [ :destroy, :update ]
 
   def create
@@ -15,13 +15,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if current_user.author_of?(@answer)
-      @answer.destroy
-      flash[:notice] = 'Your answer was successfully deleted.'
-    else
-      flash[:notice] = 'You dont have a right to delete this answer'
-    end
-    redirect_to question_path(@question)
+    @answer.destroy if current_user.author_of?(@answer)
   end
 
   def update
