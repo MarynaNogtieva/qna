@@ -58,9 +58,9 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     it 'cannot change attributes for the non-author' do
-      patch :update, params: {id: other_answer, question_id: question, answer:{body: 'updated answer'}, format: :js}
-      answer.reload
-      expect(answer.body).to_not eq 'updated answer'
+      patch :update, params: {id: answer, question_id: question, answer:{body: 'updated answer'}, format: :js}
+      other_answer.reload
+      expect(other_answer.body).to_not eq 'updated answer'
     end
 
     it 'renders update template' do 
