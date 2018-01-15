@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_question, only: [ :create, :destroy]
-  before_action :load_answer, only: [ :destroy, :update ]
+  before_action :load_question, only: [ :create, :destroy, :best_answer]
+  before_action :load_answer, only: [ :destroy, :update, :best_answer ]
 
   def create
     @answer = current_user.answers.new(answer_params)
@@ -22,10 +22,12 @@ class AnswersController < ApplicationController
     @answer.update(answer_params) if current_user.author_of?(@answer)
     @question = @answer.question
   end
-  # new action, check if author of question, new method in answer
-  # uncheck from previos best answer, check new
-  # use transaction, use !
-  #question return current best answer
+
+  def best_answer 
+    if current_user.author_of?(@question)
+      @answer.mark_best_answer if @question.answers.include? @answer
+    end
+  end
 
   private
   def load_question

@@ -87,4 +87,27 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'POST #best_answer' do
+    sign_in_user
+    def choose_best_answer
+      post :best_answer, params: {id: answer, question_id: question, format: :js}
+    end
+    
+    it 'assigns the requested answer to @answer' do
+      choose_best_answer
+      expect(assigns(:answer)).to eq answer
+    end
+
+    it 'assigns the @question' do
+      choose_best_answer
+      expect(assigns(:question)).to eq question
+    end
+    
+    it 'marks answer as the best' do
+      choose_best_answer
+      answer.reload
+      expect(answer.best).to be true
+    end
+  end
 end
