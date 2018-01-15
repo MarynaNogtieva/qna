@@ -10,13 +10,12 @@ I want to be able to delete answer to a question' do
   given(:question) { create(:question, user: author) }
   given!(:answer) { create(:answer, question: question, user: author) }
 
-  scenario 'The author of the question tries to remove it' do
+  scenario 'The author of the question tries to remove it', js: true do
     sign_in(author)
 
     visit question_path(question)
     click_on 'Delete Answer'
     expect(page).to_not have_content answer.body
-    expect(page).to have_content 'Your answer was successfully deleted.'
   end
 
   scenario 'Not an author cannot delete a question' do
