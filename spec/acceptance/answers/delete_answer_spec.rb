@@ -18,14 +18,14 @@ I want to be able to delete answer to a question' do
     expect(page).to_not have_content answer.body
   end
 
-  scenario 'Not an author cannot delete a question' do
+  scenario 'Not an author cannot delete an answer' do
     sign_in(not_author)
 
     visit question_path(question)
     expect(page).to_not have_content 'Delete Answer'
   end
 
-  scenario 'Non-authenticated user cannot delete a question' do
+  scenario 'Non-authenticated user cannot delete an answer' do
     visit question_path(question)
     expect(page).to_not have_content 'Delete Answer'
   end
