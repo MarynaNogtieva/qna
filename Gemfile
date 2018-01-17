@@ -52,6 +52,7 @@ group :development, :test do
   gem 'launchy'
   gem 'poltergeist'
   gem 'database_cleaner'
+  gem 'selenium-webdriver'
 end
 
 group :development do
@@ -67,6 +68,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
   gem 'capybara-screenshot'
+  gem 'capybara-selenium'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

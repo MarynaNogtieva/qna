@@ -1,10 +1,10 @@
 $(document).on('turbolinks:load',function() {
   $('.answers').on('click','.edit-answer-link', function(e) {
     e.preventDefault();
-    let editLink = $(this);
-    let answerId=  editLink .data('answer-id');
+    var editLink = $(this);
+    var answerId =  editLink.data('answerId');
     editLink .hide();
-    let answer = $('#edit-answer-'+answerId);
+    var answer = $('#edit_answer_'+answerId);
     answer.show();
 
     

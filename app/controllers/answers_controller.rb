@@ -15,7 +15,13 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer.destroy if current_user.author_of?(@answer)
+    if current_user.author_of?(@answer)
+      @answer.destroy 
+    else
+      respond_to do |format|
+        format.html { render :nothing => true, :notice => 'Only an author of the answer can delete it' }
+      end
+    end
   end
 
   def update

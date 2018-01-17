@@ -32,18 +32,22 @@ I want to be able to edit it.
     end
 
     scenario 'Author tries edit his/her answer with valid params', js: true do
+      # sleep(1000)
       within ".answers" do
         click_on 'Edit Answer'
         expect(page).to have_css "#edit-answer-#{answer.id}"
-      end
+      
 
-      within "#edit-answer-#{answer.id}" do 
-        fill_in 'Body', with: 'edited answer'
-        click_on 'Save'
-      end
+        within "#edit_answer_#{answer.id}" do 
+          # fill_in 'Body', with: 'edited answer'
+          fill_in '#answer_body', with: 'edited answer'
+          click_on 'Save'
+        end
+
         expect(page).to_not have_content answer.body
         expect(page).to have_content 'edited answer'
         expect(page).to_not have_selector 'textarea'
+      end
     end
 
     scenario 'Author tries edit his/her answer with invalid params' do
