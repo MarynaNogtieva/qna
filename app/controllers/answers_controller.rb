@@ -19,7 +19,8 @@ class AnswersController < ApplicationController
       @answer.destroy 
     else
       respond_to do |format|
-        format.html { render :nothing => true, :notice => 'Only an author of the answer can delete it' }
+        format.html { render nothing: true, notice: 'Only an author of the answer can delete it' }
+        # render layout: false
       end
     end
   end
@@ -31,7 +32,7 @@ class AnswersController < ApplicationController
 
   def best_answer 
     if current_user.author_of?(@question)
-      @answer.mark_best_answer if @question.answers.include? @answer
+      @answer.mark_best if @question.answers.include? @answer
     end
   end
 
