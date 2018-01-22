@@ -35,12 +35,11 @@ I want to be able to edit it.
       # sleep(1000)
       within ".answers" do
         click_on 'Edit Answer'
-        expect(page).to have_css "#edit-answer-#{answer.id}"
+        expect(page).to have_css "#edit_answer_#{answer.id}"
       
 
-        within "#edit_answer_#{answer.id}" do 
-          # fill_in 'Body', with: 'edited answer'
-          fill_in '#answer_body', with: 'edited answer'
+        within "#edit_answer_#{answer.id}" do
+          fill_in 'Edit Your Answer', with: 'edited answer'
           click_on 'Save'
         end
 
@@ -50,18 +49,19 @@ I want to be able to edit it.
       end
     end
 
-    scenario 'Author tries edit his/her answer with invalid params' do
+    scenario 'Author tries edit his/her answer with invalid params', js: true do
       within ".answers" do
         click_on 'Edit Answer'
-        expect(page).to have_css "#edit-answer-#{answer.id}"
-      end
+        expect(page).to have_css "#edit_answer_#{answer.id}"
+      
 
-      within "#edit-answer-#{answer.id}" do 
-        fill_in 'Body', with: ''
-        click_on 'Save'
-      end
+        within "#edit_answer_#{answer.id}" do 
+          fill_in 'Edit Your Answer', with: ''
+          click_on 'Save'
+        end
         expect(page).to have_content answer.body
         expect(page).to have_selector 'textarea'
+      end
     end
   end
 end

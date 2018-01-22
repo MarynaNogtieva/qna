@@ -16,19 +16,14 @@ I want to be able to mark the answer as the best one' do
     end
 
     scenario 'Can mark best answer', js: true do
-      within "#answer-id-#{answer.id}" do
-        expect(page).to have_content 'Best Answer'
-      end
-
-      within "#answer-id-#{answer.id}" do
+      within ".answers" do
         click_on 'Best Answer'
-      end
-
-      expect(page).to have_css '.best_answer'
-
-      within '.best_answer' do
-        expect(page).to_not have_button 'Best answer'
-      end
+        expect(page).to have_css 'div.best-answer'
+      
+        within '.best-answer' do
+          expect(page).to_not have_button 'Best answer'
+        end
+      end 
     end
   end
 
