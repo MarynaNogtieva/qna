@@ -39,15 +39,16 @@ I want to be able to edit the question
       sign_in(author)
       visit question_path(question)
 
-      
-      click_on 'Edit Question'
-      fill_in 'Title', with: 'edited title'
-      fill_in 'Question', with: 'edited question'
-      click_on 'Save'
+      within '.question' do
+        click_on 'Edit Question'
+        fill_in 'Title', with: 'edited title'
+        fill_in 'Question', with: 'edited question'
+        click_on 'Save'
 
-      expect(page).to_not have_content question.body
-      expect(page).to have_content 'edited question'
-      expect(page).to_not have_selector 'textarea'
+        expect(page).to_not have_content question.body
+        expect(page).to have_content 'edited question'
+        expect(page).to_not have_selector 'textarea'
+      end
     end
   end
 end
