@@ -105,8 +105,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it "user cannot change somebody else's question" do
-        other_user = create(:user)
-        other_question = create(:question, user: other_user)
+        other_question = create(:question)
         patch :update, params: {id: question, question: {title: 'some title', body: 'some body'}, format: :js}
 
         other_question.reload

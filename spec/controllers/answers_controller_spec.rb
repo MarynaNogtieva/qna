@@ -107,7 +107,7 @@ RSpec.describe AnswersController, type: :controller do
     it 'marks answer as the best' do
       choose_best_answer
       answer.reload
-      expect(answer.best).to be true
+      expect(answer).to be_best
     end
   end
 end

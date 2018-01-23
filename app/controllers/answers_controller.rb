@@ -31,8 +31,9 @@ class AnswersController < ApplicationController
   end
 
   def best_answer 
+    @answer = @question.answers.find(params[:id])
     if current_user.author_of?(@question)
-      @answer.mark_best if @question.answers.include? @answer
+      @answer.mark_best
     end
   end
 
