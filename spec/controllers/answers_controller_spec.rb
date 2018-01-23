@@ -34,7 +34,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #update' do
     sign_in_user
-    before { answer } #why do we use before here?
+    before { answer }
 
     def update_answer(attrs)
       patch :update, params: {id: answer, question_id: question, answer: attrs, format: :js}
