@@ -32,6 +32,7 @@ class AnswersController < ApplicationController
     if current_user.author_of?(@answer.question)
       @answer.mark_best
     end
+    @question = @answer.question
   end
 
   private

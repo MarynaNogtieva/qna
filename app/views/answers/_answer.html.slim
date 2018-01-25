@@ -8,7 +8,7 @@ div id="answer-id-#{answer.id}" class="#{'best-answer' if answer.best?}"
       p= link_to 'Edit Answer', nil, class: 'edit-answer-link', data: {answer_id: answer.id}
     
      
-      =form_for [answer], remote: true do |form|
+      =form_for answer, remote: true do |form|
         div id="answer-errors-#{answer.id}"
         = form.label :body, 'Edit Your Answer'
         = form.text_area :body
