@@ -1,5 +1,4 @@
-require 'rails_helper'
-
+require_relative '../acceptance_helper'
 
 feature 'Dele question', '
 In order to delete outdated or incorrect question

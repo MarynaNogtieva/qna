@@ -1,5 +1,18 @@
-div 
+div id="answer-id-#{answer.id}" class="#{'best-answer' if answer.best?}"
   p= answer.body
   p= answer.updated_at.to_s
-  - if current_user&.author_of?(answer)
-    p= link_to 'Delete Answer', question_answer_path(@question, answer), method: :delete
+  - if current_user&.author_of?(answer)  
+    div
+      div#messages
+      p= link_to 'Delete Answer',answer , remote: true, method: :delete, data: { confirm: "Are you sure you wnt to delete this answer?" }
+      p= link_to 'Edit Answer', nil, class: 'edit-answer-link', data: {answer_id: answer.id}
+    
+     
+      =form_for [answer], remote: true do |form|
+        div id="answer-errors-#{answer.id}"
+        = form.label :body, 'Edit Your Answer'
+        = form.text_area :body
+        = link_to 'Cancel', nil, data: { 'cancel-edit-id': answer.id }, class: 'btn-cancel-edit-answer'
+        = form.submit 'Save', class: 'btn-save-updated-answer'
+  - if current_user&.author_of?(answer.question) && !answer.best?
+      p= button_to 'Best Answer', best_answer_answer_path(answer), remote: true

@@ -1,6 +1,7 @@
+
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, except: %i[index show]
-  before_action :load_question, only: %i[update edit show destroy]
+  before_action :authenticate_user!, except: %i[index show update]
+  before_action :load_question, only: %i[update show destroy]
   
   def index
     @questions = Question.all
@@ -23,15 +24,9 @@ class QuestionsController < ApplicationController
       render :new
     end
   end
-  
-  def edit; end
 
   def update
-    if @question.update(question_params)
-      redirect_to @question
-    else
-      render :edit
-    end
+    @question.update(question_params) if current_user.author_of?(@question)
   end
 
   def destroy

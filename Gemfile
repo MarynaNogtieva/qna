@@ -34,6 +34,8 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 gem 'slim-rails'
 
+gem 'twitter-bootstrap-rails'
+
 gem 'jquery-rails'
 
 gem 'devise'
@@ -48,8 +50,9 @@ group :development, :test do
   gem 'geckodriver-helper'
   # to be able to see how the looks for the user
   gem 'launchy'
-  gem 'selenium-webdriver'
+  gem 'poltergeist'
   gem 'database_cleaner'
+  gem 'selenium-webdriver'
 end
 
 group :development do
@@ -64,7 +67,8 @@ end
 group :test do
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
-
+  gem 'capybara-screenshot'
+  gem 'capybara-selenium'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

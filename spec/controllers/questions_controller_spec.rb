@@ -47,18 +47,18 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
   
-  describe 'GET #edit' do
-    sign_in_user
-    before { get :edit, params: { id: question } }
+  # describe 'GET #edit' do
+  #   sign_in_user
+  #   before { get :edit, params: { id: question } }
     
-    it 'assigns the requested question to @question' do
-      expect(assigns(:question)).to eq question
-    end
+  #   it 'assigns the requested question to @question' do
+  #     expect(assigns(:question)).to eq question
+  #   end
     
-    it 'render new edit' do
-      expect(response).to render_template :edit
-    end
-  end
+  #   it 'render new edit' do
+  #     expect(response).to render_template :edit
+  #   end
+  # end
   
   describe 'POST #create' do
     sign_in_user
@@ -92,27 +92,31 @@ RSpec.describe QuestionsController, type: :controller do
     sign_in_user
     context'with valid attributess' do
       it 'assigns the requested question to @question'do
-        patch :update, params: {id: question, question: attributes_for(:question)}
+        patch :update, params: {id: question, question: attributes_for(:question), format: :js}
         expect(assigns(:question)).to eq question
       end
 
       it 'changes question attributes'do
-        patch :update, params: {id: question, question: {title: "new title", body: "new body"}}
+        patch :update, params: {id: question, question: {title: "new title", body: "new body"}, format: :js}
         question.reload
 
         expect(question.title).to eq 'new title'
         expect(question.body).to eq 'new body'
       end
 
-      it 'redirects to the updated question'do
-        patch :update, params: { id: question, question: {title: "new title", body: "new body" } }
-        expect(response).to redirect_to question
-      end
+      it "user cannot change somebody else's question" do
+        other_question = create(:question)
+        patch :update, params: {id: question, question: {title: 'some title', body: 'some body'}, format: :js}
+
+        other_question.reload
+        expect(question.title).to_not eq 'some title'
+        expect(question.body).to_not eq 'some body'
+      end 
     end
 
     context'with invalid attributess' do
-      before { patch :update, params: {id: question, question: {title: 'MyString', body: 'MyText'}} }
-      before { patch :update, params: {id: question, question: {title: "new title", body: nil}} }
+      before { patch :update, params: {id: question, question: {title: 'MyString', body: 'MyText'}}, format: :js }
+      before { patch :update, params: {id: question, question: {title: "new title", body: nil}}, format: :js }
       
       it 'does not change question attributes' do 
         question.reload
@@ -121,7 +125,8 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 're-renders edit view' do
-        expect(response).to render_template :edit
+        patch :update, params: { id: question, question: attributes_for(:question) }
+        expect(response).to render_template :update
       end
     end
   end
