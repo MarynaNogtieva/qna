@@ -1,5 +1,5 @@
 require_relative '../acceptance_helper'
-
+require 'byebug'
 feature 'Author can mark answer to be the best one', '
 In order to let people know which of the answers solved my problem
 As an author of the question
@@ -18,7 +18,9 @@ I want to be able to mark the answer as the best one' do
 
     scenario 'Can mark best answer', js: true do
       within ".answers" do
-        click_on 'Best Answer'
+        within "#answer-id-#{answer.id}" do
+          click_on 'Best Answer'
+        end
         expect(page).to have_css 'div.best-answer'
       
         within '.best-answer' do
@@ -32,10 +34,20 @@ I want to be able to mark the answer as the best one' do
         within "#answer-id-#{answer.id}" do
           click_on 'Best Answer'
         end
-        second_answer_index = page.body.index(another_answer.body)
-        best_answer_index = page.body.index(answer.body)
-        expect(best_answer_index).to be > second_answer_index
+        within "#answer-id-#{another_answer.id}" do
+          click_on 'Best Answer'
+        end   
+        # whithin '.answer:first' do
+        #   #use content of the best answer from Factory
+        #   to eq answer.body
+        # end
+        sleep(1)
+        answers = page.all('div.answers > div')
+      
+        expect(answers[0][:class]).to eq 'best-answer'
+        expect(page).to have_selector('.best-answer', count: 1)
       end
+      
     end
   end
 

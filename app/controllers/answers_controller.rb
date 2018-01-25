@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_question, only: [ :create, :destroy, :best_answer]
-  before_action :load_answer, only: [ :destroy, :update, :best_answer ]
+  before_action :load_question, only: [:create]
+  before_action :load_answer, only: [:destroy, :update, :best_answer ]
 
   def create
     @answer = current_user.answers.new(answer_params)
@@ -17,11 +17,9 @@ class AnswersController < ApplicationController
   def destroy
     if current_user.author_of?(@answer)
       @answer.destroy 
-    else
-      respond_to do |format|
-        format.html { render nothing: true, notice: 'Only an author of the answer can delete it' }
-        # render layout: false
-      end
+     else
+      flash.now[:notice] = 'Only an author of the answer can delete it'
+      render 'common/messages'
     end
   end
 
@@ -31,8 +29,7 @@ class AnswersController < ApplicationController
   end
 
   def best_answer 
-    @answer = @question.answers.find(params[:id])
-    if current_user.author_of?(@question)
+    if current_user.author_of?(@answer.question)
       @answer.mark_best
     end
   end

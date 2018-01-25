@@ -9,7 +9,7 @@ class Answer < ApplicationRecord
   def mark_best
     transaction do
       question.answers.update_all(best: false)
-      update!(best: true)
+      reload.update!(best: true)
     end
   end
 end
