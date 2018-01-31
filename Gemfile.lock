@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/carrierwaveuploader/carrierwave.git
+  revision: 03a175f0110a0941383b1a93ca7f9b6b6141094a
+  specs:
+    carrierwave (1.2.2)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -60,10 +69,6 @@ GEM
     capybara-selenium (0.0.6)
       capybara
       selenium-webdriver
-    carrierwave (1.2.2)
-      activemodel (>= 4.0.0)
-      activesupport (>= 4.0.0)
-      mime-types (>= 1.16)
     childprocess (0.8.0)
       ffi (~> 1.0, >= 1.0.11)
     cliver (0.3.2)
@@ -272,7 +277,7 @@ DEPENDENCIES
   capybara (~> 2.13)
   capybara-screenshot
   capybara-selenium
-  carrierwave
+  carrierwave!
   coffee-rails (~> 4.2)
   database_cleaner
   devise

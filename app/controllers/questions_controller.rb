@@ -1,4 +1,3 @@
-
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show update]
   before_action :load_question, only: %i[update show destroy]
@@ -48,6 +47,15 @@ class QuestionsController < ApplicationController
   end
   
   def question_params
-    params.require(:question).permit(:title, :body, attachments_attributes: [:file])
+    params.require(:question).permit(
+      :title,
+      :body,
+      attachments_attributes:
+      [
+        {
+          files: []
+        }
+      ]
+    )
   end
 end

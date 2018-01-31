@@ -15,8 +15,10 @@ given(:user) { create (:user) }
   end
 
   scenario 'User adds file while creating a question' do
-    attach_file 'File', "#{Rails.root}/README.md"
+    attach_file 'File', ["#{Rails.root}/Gemfile.lock", "#{Rails.root}/Gemfile"]
     click_on 'Create'
-    expect(page).to have_link 'README.md', href: '/uploads/attachment/file/1/README.md'
+
+    expect(page).to have_link 'Gemfile.lock', href: '/uploads/attachment/files/1/Gemfile.lock'
+    expect(page).to have_link 'Gemfile', href: '/uploads/attachment/files/1/Gemfile'
   end
 end
