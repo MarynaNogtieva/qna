@@ -50,5 +50,20 @@ I want to be able to edit the question
         expect(page).to_not have_selector 'textarea'
       end
     end
+
+    scenario 'Author tries to upload files while editing a question', js: true do
+      sign_in(author)
+      visit question_path(question)
+
+      click_on 'Edit Question'
+      fill_in 'Title', with: 'edited title'
+      fill_in 'Question', with: 'edited question'
+      within '.edit-question' do
+        attach_file 'File', ["#{Rails.root}/Gemfile.lock", "#{Rails.root}/Gemfile"]
+      end
+
+      expect(page).to have_link 'Gemfile.lock', href: '/uploads/attachment/files/1/Gemfile.lock'
+      expect(page).to have_link 'Gemfile', href: '/uploads/attachment/files/1/Gemfile'
+    end
   end
 end

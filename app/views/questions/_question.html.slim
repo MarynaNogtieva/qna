@@ -7,11 +7,15 @@ p= question.body
   p= link_to 'Edit Question',nil, class: 'edit-question-link', data: {question_id: @question.id}
   
 div class="edit-question" id="edit-question-#{question.id}"
-  =form_for question, remote: true do |form|
+  =form_for question, remote: true do |f|
     div#question-errors
-    = form.label :title
-    = form.text_field :title
-    = form.label :body, 'Question'
-    = form.text_area :body
+    = f.label :title
+    = f.text_field :title
+    = f.label :body, 'Question'
+    = f.text_area :body
+    div Attachements
+    div.nested-form
+      = f.fields_for :attachments do |attach|
+        = render 'common/attachement_form', f: attach
     = link_to 'Cancel', nil, data: { 'cancel-edit-id': question.id }, class: 'btn-cancel-edit-question'
-    = form.submit 'Save', class: 'btn-save-updated-question'
+    = f.submit 'Save', class: 'btn-save-updated-question'
