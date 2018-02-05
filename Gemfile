@@ -71,6 +71,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'capybara-screenshot'
   gem 'capybara-selenium'
+  gem 'rack-test',  '~> 0.7.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

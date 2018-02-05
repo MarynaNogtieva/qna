@@ -9,7 +9,6 @@ class QuestionsController < ApplicationController
   def show
     @answer = Answer.new
     @answer.attachments.build
-    @question.attachments.build
   end
   
   def new
@@ -27,7 +26,8 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def update
+  def update 
+    @question.attachments.create(attachment_params) if attachment_params.has_key?(:files)
     @question.update(question_params) if current_user.author_of?(@question)
   end
 
@@ -57,6 +57,13 @@ class QuestionsController < ApplicationController
           files: []
         }
       ]
+    )
+  end
+  def attachment_params
+    params.require(:question).permit(
+      {
+        files: []
+      }
     )
   end
 end

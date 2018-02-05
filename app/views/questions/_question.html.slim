@@ -1,6 +1,6 @@
 h4= question.title
 p= question.body
-=render 'common/attachment_list', resource: @question
+=render 'common/attachment_list', resource: question
 
 - if current_user&.author_of?(question)
   p= link_to 'Delete Question', question_path(question), method: :delete
@@ -13,9 +13,8 @@ div class="edit-question" id="edit-question-#{question.id}"
     = f.text_field :title
     = f.label :body, 'Question'
     = f.text_area :body
+    = render 'common/attachment_list', resource: question
     div Attachements
-    div.nested-form
-      = f.fields_for :attachments do |attach|
-        = render 'common/attachement_form', f: attach
+    = render 'common/attachment_form', f: f
     = link_to 'Cancel', nil, data: { 'cancel-edit-id': question.id }, class: 'btn-cancel-edit-question'
     = f.submit 'Save', class: 'btn-save-updated-question'
