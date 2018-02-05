@@ -6,6 +6,7 @@ RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question, user: user) }
   let(:answer) { create(:answer, user: user, question: question) }
   let(:other_answer) { create(:answer, user: other_user, question: question) }
+  let(:answer_with_attachments) { create(:answer_with_attachments, user: user, question: question) }
 
   describe 'POST #create' do
     sign_in_user
@@ -66,6 +67,12 @@ RSpec.describe AnswersController, type: :controller do
     it 'renders update template' do 
       update_answer(attributes_for(:answer))
       expect(response).to render_template :update
+    end
+
+    it 'creates attachment for the answer' do
+      patch :update, params: {id: answer_with_attachments, question_id: question, answer: attributes_for(:answer_with_attachments), format: :js}
+      answer_with_attachments.reload     
+      expect((answer_with_attachments).attachments.length).to eq 1
     end
   end
 

@@ -25,6 +25,7 @@ class AnswersController < ApplicationController
 
   def update
     @answer.update(answer_params) if current_user.author_of?(@answer)
+    @answer.attachments.create(attachment_params) if attachment_params.has_key?(:files)
     @question = @answer.question
   end
 
@@ -51,6 +52,13 @@ class AnswersController < ApplicationController
       [
         files: []
       ]
+    )
+  end
+  def attachment_params
+    params.require(:answer).permit(
+      {
+        files: []
+      }
     )
   end
 end

@@ -6,5 +6,13 @@ FactoryBot.define do
       body nil
       question nil
     end
+
+    factory :answer_with_attachments, class: "Answer"  do
+      sequence(:body) { |n| "MyText #{n}" }
+      question nil
+      after :build do |answer, eval|
+        answer.attachments << create(:attachment)
+      end
+    end
   end
 end

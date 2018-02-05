@@ -109,7 +109,7 @@ RSpec.describe QuestionsController, type: :controller do
         patch :update, params: {id: question_with_attachments,
                                 question: attributes_for(:question_with_attachments),
                                 format: :js}
-        question.reload                  
+        question_with_attachments.reload                  
         expect((question_with_attachments).attachments.length).to eq 1
       end
 

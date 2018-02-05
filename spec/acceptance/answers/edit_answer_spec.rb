@@ -63,5 +63,20 @@ I want to be able to edit it.
         expect(page).to have_selector 'textarea'
       end
     end
+
+    scenario 'Author tries to upload files while editing his/her answer', js: true do
+      within ".answers" do
+        click_on 'Edit Answer'
+          within "#edit_answer_#{answer.id}" do
+          fill_in 'Edit Your Answer', with: 'edited answer'
+          attach_file 'File', ["#{Rails.root}/Gemfile.lock", "#{Rails.root}/Gemfile"]
+          click_on 'Save'
+        end
+
+
+        expect(page).to have_link 'Gemfile.lock', href: '/uploads/attachment/files/1/Gemfile.lock'
+        expect(page).to have_link 'Gemfile', href: '/uploads/attachment/files/1/Gemfile'
+      end
+    end
   end
 end

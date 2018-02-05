@@ -14,7 +14,10 @@ div id="answer-id-#{answer.id}" class="#{'best-answer' if answer.best?}"
       =form_for answer, remote: true do |form|
         div id="answer-errors-#{answer.id}"
         = form.label :body, 'Edit Your Answer'
+        = render 'common/attachment_list', resource: answer
         = form.text_area :body
+        div Attachements
+        = render 'common/attachment_form', f: form
         = link_to 'Cancel', nil, data: { 'cancel-edit-id': answer.id }, class: 'btn-cancel-edit-answer'
         = form.submit 'Save', class: 'btn-save-updated-answer'
   - if current_user&.author_of?(answer.question) && !answer.best?
