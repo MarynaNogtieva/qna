@@ -15,4 +15,5 @@ div class="answers"
    div.nested-form
     = f.fields_for :attachments do |attach|
       = render 'common/attachment_form', f: attach
+      = link_to_add_association 'add more file', f, :attachments, partial: 'common/attachment_form'
    = f.submit 'Answer a question'

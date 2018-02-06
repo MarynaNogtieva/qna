@@ -35,6 +35,8 @@ RSpec.configure do |config|
   Capybara::Screenshot.prune_strategy = :keep_last_run
 
   config.include AcceptanceHelpers, type: :feature
+  config.include WaitForAjax, type: :feature
+  
   config.use_transactional_fixtures = false
 
   config.before(:suite) do
