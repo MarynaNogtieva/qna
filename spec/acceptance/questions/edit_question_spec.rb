@@ -55,17 +55,7 @@ I want to be able to edit the question
       sign_in(author)
       visit question_path(question)
 
-      click_on 'Edit Question'
-      fill_in 'Title', with: 'edited title'
-      fill_in 'Question', with: 'edited question'
-      within '.edit-question' do
-        click_on 'add file'
-        click_on 'add file'
-        inputs = all('input[type="file"]')
-        inputs[0].set("#{Rails.root}/Gemfile.lock")
-        inputs[1].set("#{Rails.root}/Gemfile")
-        click_on 'Save'
-      end
+      add_files_to_question
 
       expect(page).to have_content 'Gemfile.lock'
       expect(page).to have_content 'Gemfile'
