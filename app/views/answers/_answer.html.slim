@@ -1,5 +1,8 @@
 div id="answer-id-#{answer.id}" class="#{'best-answer' if answer.best?}"
   p= answer.body
+  =render 'common/attachment_list', resource: answer
+  
+
   p= answer.updated_at.to_s
   - if current_user&.author_of?(answer)  
     div
@@ -8,11 +11,12 @@ div id="answer-id-#{answer.id}" class="#{'best-answer' if answer.best?}"
       p= link_to 'Edit Answer', nil, class: 'edit-answer-link', data: {answer_id: answer.id}
     
      
-      =form_for answer, remote: true do |form|
+      =form_for answer, remote: true do |f|
         div id="answer-errors-#{answer.id}"
-        = form.label :body, 'Edit Your Answer'
-        = form.text_area :body
+        = f.label :body, 'Edit Your Answer'
+        = f.text_area :body
+        = render 'common/edit_attachment_form', f: f
         = link_to 'Cancel', nil, data: { 'cancel-edit-id': answer.id }, class: 'btn-cancel-edit-answer'
-        = form.submit 'Save', class: 'btn-save-updated-answer'
+        = f.submit 'Save', class: 'btn-save-updated-answer'
   - if current_user&.author_of?(answer.question) && !answer.best?
       p= button_to 'Best Answer', best_answer_answer_path(answer), remote: true
