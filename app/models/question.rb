@@ -8,4 +8,20 @@ class Question < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :votes, reject_if: :all_blank, allow_destroy: true
+
+  def vote_for(user)
+    votes.create!(user_id: user.id, score: 1)
+  end
+
+  def vote_against(user)
+    votes.create!(user_id: user.id, score: -1)
+  end
+
+  def vote_score
+    votes.sum(:score)
+  end
+
+  def voted?(user)
+    votes.exists?(user_id: user.id)
+  end
 end
