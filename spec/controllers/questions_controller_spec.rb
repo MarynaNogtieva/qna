@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { @user || create(:user) }
   let(:question) { create(:question, user: user) }
-
+  let(:non_author) { create(:user) }
+  let(:non_author_question) { create(:question, user: non_author) }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2, user: user) }
@@ -158,6 +159,30 @@ RSpec.describe QuestionsController, type: :controller do
       random_question = create(:question, user: random_user)
 
       expect { delete :destroy, params: {id: random_question} }.to_not change(Question, :count)
+    end
+  end
+
+  describe 'POST #vote up' do
+    sign_in_user
+
+    it 'increases "voted-for" score for non-author question' do
+      expect { post :vote_for, params: { id: non_author_question } }.to change(Vote, :count).by(1)
+    end
+
+    it 'does not allow an author to vote for his/her question' do
+      expect { post :vote_for, params: { id: question } }.to_not change(Vote, :count)
+    end
+  end
+
+  describe 'POST #vote against' do
+    sign_in_user
+
+    it 'increases "voted-against" score for non-author question' do
+      expect { post :vote_against, params: { id: non_author_question } }.to change(Vote, :count).by(1)
+    end
+
+    it 'does not allow an author to vote against his/her question' do
+      expect { post :vote_against, params: { id: question } }.to_not change(Vote, :count)
     end
   end
 end

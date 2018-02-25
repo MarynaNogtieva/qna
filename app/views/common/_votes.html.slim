@@ -1,0 +1,7 @@
+.vote data-id="#{resource.id}"
+  - if user_signed_in? && !resource.voted?(current_user) && !current_user.author_of?(resource)
+   .vote-for= button_to '+', remote: true, data: { type: :json }
+   .vote-score= resource.vote_score
+   .vote-against= button_to '-', remote: true, data: { type: :json }
+  - else
+   .vote-score= resource.vote_score

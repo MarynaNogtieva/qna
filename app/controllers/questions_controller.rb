@@ -1,7 +1,7 @@
 
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show update]
-  before_action :load_question, only: %i[update show destroy]
+  before_action :load_question, only: %i[update show destroy vote_for vote_against]
   
   def index
     @questions = Question.all
@@ -36,9 +36,27 @@ class QuestionsController < ApplicationController
       @question.destroy
       flash[:notice] = 'Your question was successfully deleted.'
     else
-      flash[:notice] = 'You dont have the right to delete this quesitonr'
+      flash[:notice] = 'You dont have the right to delete this quesiton'
     end
     redirect_to questions_path
+  end
+
+  def vote_for
+    if current_user.author_of?(@question) || @question.voted?(current_user)
+      flash[:notice] = 'You dont have the right to vote for this question'
+    else
+      @question.vote_for(current_user)
+      render json: { score: @question.vote_score }
+    end
+  end
+
+  def vote_against
+    if current_user.author_of?(@question) || @question.voted?(current_user)
+      flash[:notice] = 'You dont have the right to vote against this question'
+    else
+      @question.vote_against(current_user)
+      render json: { score: @question.vote_score }
+    end
   end
   
   private
