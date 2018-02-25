@@ -20,7 +20,7 @@ feature 'Votes', '
     end
   end
 
-  scenario 'non-author votes the question up and down', js: true do
+  scenario 'non-author votes the question up', js: true do
     sign_in(user)
     visit question_path(question)
 
@@ -31,7 +31,8 @@ feature 'Votes', '
       end
     end
   end
-  scenario 'non-author votes the question up and down', js: true do
+
+  scenario 'non-author votes the question  down', js: true do
     sign_in(user)
     visit question_path(question)
 
@@ -39,6 +40,19 @@ feature 'Votes', '
       within '.vote' do
         click_on '-'
         expect(page).to have_content -1
+      end
+    end
+  end
+
+  scenario 'non-author resets the vote for question', js: true do
+    sign_in(user)
+    visit question_path(question)
+
+    within "#question-id-#{question.id}" do
+      within '.vote' do
+        click_on '-'
+        click_on 'Reset Vote'
+        expect(page).to have_content 0
       end
     end
   end

@@ -48,6 +48,11 @@ RSpec.describe Question, type: :model do
       question.vote_for(user)
       expect(question.vote_score).to eq 1
     end
+
+    it 'should reset score by removing record for this vote' do
+      question.vote_for(user)
+      expect { question.reset_vote(user) }.to change(Vote, :count).by(-1)
+    end
   end
 end
 

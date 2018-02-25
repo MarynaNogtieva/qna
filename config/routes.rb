@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :questions, shallow: true do
     post :vote_for, on: :member
     post :vote_against, on: :member
+    post :reset_vote, on: :member
     
     resources :answers, only: %i[destroy create update] do
       post :best_answer, on: :member

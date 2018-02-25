@@ -24,4 +24,8 @@ class Question < ApplicationRecord
   def voted?(user)
     votes.exists?(user_id: user.id)
   end
+
+  def reset_vote(user)
+    votes.where(user: user, votable_id: self.id).delete_all
+  end
 end

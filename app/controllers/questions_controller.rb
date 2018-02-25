@@ -1,7 +1,7 @@
 
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show update]
-  before_action :load_question, only: %i[update show destroy vote_for vote_against]
+  before_action :load_question, only: %i[update show destroy vote_for vote_against reset_vote]
   
   def index
     @questions = Question.all
@@ -55,6 +55,15 @@ class QuestionsController < ApplicationController
       flash[:notice] = 'You dont have the right to vote against this question'
     else
       @question.vote_against(current_user)
+      render json: { score: @question.vote_score }
+    end
+  end
+
+  def reset_vote
+    if current_user.author_of?(@question) || !@question.voted?(current_user)
+      flash[:notice] = 'You dont have the right to reset vote for this question'
+    else
+      @question.reset_vote(current_user)
       render json: { score: @question.vote_score }
     end
   end
