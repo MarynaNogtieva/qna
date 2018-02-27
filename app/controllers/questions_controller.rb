@@ -1,5 +1,6 @@
 
 class QuestionsController < ApplicationController
+  include VoteAction
   before_action :authenticate_user!, except: %i[index show update]
   before_action :load_question, only: %i[update show destroy]
   
@@ -36,7 +37,7 @@ class QuestionsController < ApplicationController
       @question.destroy
       flash[:notice] = 'Your question was successfully deleted.'
     else
-      flash[:notice] = 'You dont have the right to delete this quesitonr'
+      flash[:notice] = 'You dont have the right to delete this quesiton'
     end
     redirect_to questions_path
   end

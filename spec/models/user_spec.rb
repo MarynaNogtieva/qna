@@ -5,11 +5,12 @@ RSpec.describe User, type: :model do
   it { should validate_presence_of :password }
   it { should have_many(:questions).dependent(:destroy)}
   it { should have_many(:answers) }
+  it { should have_many(:votes) }
 
   describe '#author_of?' do
-    let (:user) { create(:user) }
-    let (:not_author_user) { create(:user) }
-    let (:question) { create(:question, user: user) }
+    let(:user) { create(:user) }
+    let(:not_author_user) { create(:user) }
+    let(:question) { create(:question, user: user) }
     
     context 'user is an author of the question' do
       it 'returns true' do

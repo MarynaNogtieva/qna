@@ -66,7 +66,7 @@ I want to be able to edit the question
       visit question_path(question)
       add_files_to_question
       click_on 'Edit Question'
-      
+
       within '.edit-question' do
         all('.remove_fields.existing').each(&:click)
         click_on 'Save'
@@ -76,8 +76,6 @@ I want to be able to edit the question
       expect(page).to_not have_content 'Gemfile'
     end
   end
-
-  
 
   def add_files_to_question
     click_on 'Edit Question'
