@@ -1,5 +1,6 @@
 class Question < ApplicationRecord
   include Voting
+  include Commenting
 
   has_many :answers, dependent: :destroy
   belongs_to :user
