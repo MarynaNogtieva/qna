@@ -2,6 +2,7 @@ div id="answer-id-#{answer.id}" class="#{'best-answer' if answer.best?}"
   p= answer.body
   =render 'common/attachment_list', resource: answer
   =render 'common/votes', resource: answer
+ 
 
   
 

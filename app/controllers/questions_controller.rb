@@ -1,6 +1,7 @@
 
 class QuestionsController < ApplicationController
   include VoteAction
+  
   before_action :authenticate_user!, except: %i[index show update]
   before_action :load_question, only: %i[update show destroy]
   

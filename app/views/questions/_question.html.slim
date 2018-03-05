@@ -2,6 +2,7 @@ h4= question.title
 p= question.body
 =render 'common/attachment_list', resource: @question
 =render 'common/votes', resource: @question
+=render 'common/comments', resource: @question
 
 - if current_user&.author_of?(question)
   p= link_to 'Delete Question', question_path(question), method: :delete
