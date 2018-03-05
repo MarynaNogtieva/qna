@@ -12,15 +12,40 @@
   </head>
 
   <body>
+   <nav class="navbar navbar-custom navbar-static-top"> 
+    <div class="container"> <div class="navbar-header">
+    <button type="button" class="collapsed navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-8" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span> 
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+    </button> 
+    <a href="#" class="navbar-brand">Q&amp;A</a> 
+    </div> 
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-8"> 
+    <ul class="nav navbar-nav navbar-right"> 
+        <li>
+          <%= link_to 'Home', questions_path%>
+        </li>
+        <li>
+           <%= link_to 'Ask question', new_question_path %>
+        </li> 
+        <li>
+          <% if user_signed_in? %>
+            <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+          <% else %>
+            <%= link_to 'Sign in', new_user_session_path %>
+          <% end %>
+        </li>
+      </ul>
+
+      </div> 
+    </div> 
+  </nav>
    <div>
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
     </div>
-    <% if user_signed_in? %>
-      <p><%= link_to 'Logout', destroy_user_session_path, method: :delete %></p>
-    <% else %>
-      <p><%= link_to 'Sign in', new_user_session_path %></p>
-    <% end %>
     <%= yield %>
   </body>
 </html>

@@ -1,0 +1,23 @@
+.navbar-custom{
+    background:  #46cbb2;
+    margin-top: 2%;
+  
+   li > a, a.navbar-brand{
+      color: #fff;
+    }
+  
+    a.navbar-brand{
+      font-size: 30px;
+      font-weight: 500;
+    }
+  
+    li > a {
+      font-size: 22px;
+    }
+  
+    li > a:hover,
+    li > a:active{
+      background:  #2d8574;
+    }
+  }
+  

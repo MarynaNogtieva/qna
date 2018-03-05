@@ -47,7 +47,7 @@ I want to be able to edit the question
 
         expect(page).to_not have_content question.body
         expect(page).to have_content 'edited question'
-        expect(page).to_not have_selector 'textarea'
+        expect(page).to_not have_selector 'textarea#question_body'
       end
     end
 
