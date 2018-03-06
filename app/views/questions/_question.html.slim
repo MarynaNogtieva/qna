@@ -1,20 +1,23 @@
-h4= question.title
-p= question.body
-=render 'common/attachment_list', resource: @question
-=render 'common/votes', resource: @question
-=render 'common/comments', resource: @question
+.row
+  .col-sm-1
+    =render 'common/votes', resource: @question
+  .col-sm-11
+    h4= question.title
+    p= question.body
+    =render 'common/attachment_list', resource: @question
+    =render 'common/comments', resource: @question
 
-- if current_user&.author_of?(question)
-  p= link_to 'Delete Question', question_path(question), method: :delete
-  p= link_to 'Edit Question',nil, class: 'edit-question-link', data: {question_id: @question.id}
-  
-div class="edit-question" id="edit-question-#{question.id}"
-  =form_for question, remote: true do |f|
-    div#question-errors
-    = f.label :title
-    = f.text_field :title
-    = f.label :body, 'Question'
-    = f.text_area :body
-    = render 'common/edit_attachment_form', f: f
-    = link_to 'Cancel', nil, data: { 'cancel-edit-id': question.id }, class: 'btn-cancel-edit-question'
-    = f.submit 'Save', class: 'btn-save-updated-question'
+    - if current_user&.author_of?(question)
+      p= link_to 'Delete Question', question_path(question), method: :delete
+      p= link_to 'Edit Question',nil, class: 'edit-question-link', data: {question_id: @question.id}
+      
+    div class="edit-question" id="edit-question-#{question.id}"
+      =form_for question, remote: true do |f|
+        div#question-errors
+        = f.label :title
+        = f.text_field :title
+        = f.label :body, 'Question'
+        = f.text_area :body
+        = render 'common/edit_attachment_form', f: f
+        = link_to 'Cancel', nil, data: { 'cancel-edit-id': question.id }, class: 'btn-cancel-edit-question'
+        = f.submit 'Save', class: 'btn-save-updated-question'

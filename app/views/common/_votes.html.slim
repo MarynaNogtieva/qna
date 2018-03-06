@@ -1,3 +1,4 @@
+
 .vote data-id="#{resource.id}"
   - if user_signed_in? && !current_user.author_of?(resource)
    .vote-for= button_to '+', { remote: true, data: { type: :json } }, { class: 'vote-for-btn ' "#{'hide' if resource.voted?(current_user)}" }

@@ -21,3 +21,37 @@
     }
   }
   
+  /* VOTES */
+  .vote-for-btn, .vote-against-btn {
+    border: none;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .vote-for-btn {
+    color: #0c6203;
+  }
+
+  .vote-against-btn {
+    color: #dc2a0e;
+  }
+
+  .vote-score, .vote-for, .vote-against{
+    text-align: center;
+  }
+
+  .reset-vote-btn {
+    margin-top: 10px;
+    border: none;
+    background: #ffe070;
+    padding: 3px 7px;
+  }
+
+  .vote-score {
+    border-radius: 50%;
+    background: rgba(190, 189, 189, .6);
+    width: 30px;
+    margin: 0 auto;
+    padding:5px;
+  }
