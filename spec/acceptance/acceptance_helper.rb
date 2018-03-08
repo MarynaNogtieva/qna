@@ -20,6 +20,7 @@ RSpec.configure do |config|
   end
   
   Capybara.javascript_driver = :headless_chrome
+  Capybara.server = :puma
   # Capybara.server_port = "3030"
   # Capybara.javascript_driver = :poltergeist
  
@@ -30,7 +31,7 @@ RSpec.configure do |config|
   # Capybara.register_driver :poltergeist do |app|
   #   Capybara::Poltergeist::Driver.new(app, options)
   # end
-  Capybara.default_max_wait_time = 5
+  Capybara.default_max_wait_time = 25
   Capybara::Screenshot.autosave_on_failure = true
   Capybara::Screenshot.prune_strategy = :keep_last_run
 

@@ -7,7 +7,8 @@
 
 (function() {
   this.App || (this.App = {});
-
+  // this helps while working with channels
+  // createConsumer() can accept params: conneection address
   App.cable = ActionCable.createConsumer();
 
 }).call(this);

@@ -1,5 +1,5 @@
 .container
-  div
+  div.question-list
     - @questions.each do |question|
         .question-item
           h4=  link_to question.title, question_path(question)
