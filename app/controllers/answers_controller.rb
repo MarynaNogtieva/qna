@@ -1,8 +1,9 @@
 class AnswersController < ApplicationController
   include VoteAction
   before_action :authenticate_user!
-  before_action :load_question, only: [:create]
-  before_action :load_answer, only: [:destroy, :update, :best_answer ]
+  before_action :load_question, only: %i[create]
+  before_action :load_answer, only: %i[destroy update best_answer ]
+  after_action :publish_answer, only: %i[create]
 
   def create
     @answer = current_user.answers.new(answer_params)
@@ -37,6 +38,29 @@ class AnswersController < ApplicationController
   end
 
   private
+  def publish_answer
+    return if @answer.errors.any?
+    attachments = @answer.attachments.map do |attach|
+      { id: attach.id, filename: attach.file.filename, url: attach.file.url }
+    end
+
+    data = {
+      answer: @answer,
+      id: @answer.id,
+      body: @answer.body,
+      question_id: @answer.question_id,
+      user_id: @answer.user_id,
+      created_at: @answer.created_at,
+      update_at: @answer.updated_at,
+      best: @answer.best,
+      attachments: attachments
+    }
+
+    ActionCable.server.broadcast("questions_#{@question.id}", 
+      data: data
+    )
+  end
+
   def load_question
     @question = Question.find(params[:question_id])
   end

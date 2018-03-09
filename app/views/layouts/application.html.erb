@@ -5,14 +5,17 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= content_for?(:title) ? yield(:title) : "TrainProject" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : "QnA" %></title>
+    <%= Gon::Base.render_data %>
     <%= csrf_meta_tags %>
+    
     <%= action_cable_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+   
    <nav class="navbar navbar-custom navbar-static-top"> 
     <div class="container"> <div class="navbar-header">
     <button type="button" class="collapsed navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-8" aria-expanded="false">

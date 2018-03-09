@@ -35,10 +35,8 @@ I want to be able to attach files to it' do
     click_on 'Answer a question'
     wait_for_ajax
 
-    within '[id^="answer-id-"]' do
-      expect(page).to have_content 'README.md'
-      expect(page).to have_content 'Gemfile.lock'
-      expect(page).to have_content 'Gemfile'
-    end
+    expect(page).to have_content 'README.md'
+    expect(page).to have_content 'Gemfile.lock'
+    expect(page).to have_content 'Gemfile'
   end
 end

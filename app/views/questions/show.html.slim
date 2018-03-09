@@ -1,9 +1,9 @@
 .container
   #errors
   .row
-    div class="question col-sm-12" id="question-id-#{@question.id}"
+    div class="question col-sm-12" id="question-id-#{@question.id}" data-id="#{@question.id}"
       = render @question
-  .row 
+  .row
     div class="answers col-sm-12"
       = render @question.answers.sort_by_best
 

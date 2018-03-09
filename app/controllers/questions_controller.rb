@@ -13,6 +13,8 @@ class QuestionsController < ApplicationController
   def show
     @answer = Answer.new
     @answer.attachments.build
+    gon.is_user_signed_in = user_signed_in?
+    gon.question_owner = @question.user_id == (current_user && current_user.id)
   end
   
   def new
