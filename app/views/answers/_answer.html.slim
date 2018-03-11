@@ -2,9 +2,6 @@ div id="answer-id-#{answer.id}" class="#{'best-answer' if answer.best?}"
   p= answer.body
   =render 'common/attachment_list', resource: answer
   =render 'common/votes', resource: answer
- 
-
-  
 
   p= answer.updated_at.to_s
   - if current_user&.author_of?(answer)  
@@ -23,3 +20,5 @@ div id="answer-id-#{answer.id}" class="#{'best-answer' if answer.best?}"
         = f.submit 'Save', class: 'btn-save-updated-answer'
   - if current_user&.author_of?(answer.question) && !answer.best?
       p= button_to 'Best Answer', best_answer_answer_path(answer), remote: true
+      
+      =render 'common/comments', resource: answer 

@@ -1,19 +1,23 @@
 $(document).on('turbolinks:load',function() {
-  $('form#new_comment').submit(function(e) {
+  $('form.new_comment').submit(function(e) {
     e.preventDefault();
-    alert("HI");
-    var parent = $(this).parent('.comments');
+
+    var parent = $(this).parents('.comments');
     var commentableId = parent.data('id');
     var url = $(this).attr('action');
-    var dataToSubmit = { body: $('#comment_body').val() };
+    var bodyText = $(this).find('#comment_body')
+    var dataToSubmit = { body: bodyText.val() };
+  
+    
     ajaxRequest('POST', url, dataToSubmit )
     .then(function(data){
+    
       parent.find('.all-comments').append('<div>'+ 
       '<p.comment-body>' + data.body +'</p>'+
       '<p.user-email>' + data.user +'</p>'+
       '<p.comment-date>' + data.date +'</p>'+
        '</div>')
-      $('#comment_body').val('');
+       bodyText.val('');
     });
 
     return false;
