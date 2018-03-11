@@ -51,9 +51,12 @@ class AnswersController < ApplicationController
       question_id: @answer.question_id,
       user_id: @answer.user_id,
       created_at: @answer.created_at,
-      update_at: @answer.updated_at,
+      updated_at: @answer.updated_at,
       best: @answer.best,
-      attachments: attachments
+      attachments: attachments,
+      voted: @answer.voted?(current_user),
+      vote_score: @answer.vote_score
+
     }
 
     ActionCable.server.broadcast("questions_#{@question.id}", 

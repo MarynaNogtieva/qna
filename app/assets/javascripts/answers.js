@@ -61,8 +61,9 @@ $(document).on('turbolinks:load',function() {
     received: function(data) {
       
       var current_user_id = gon.current_user_id 
+      console.log(data);
       if (current_user_id !== data['user_id'] || !gon.is_user_signed_in){
-        console.log(data);
+        
         $('div.answers.col-sm-12').append(JST["templates/answer"](data));
       }
     }

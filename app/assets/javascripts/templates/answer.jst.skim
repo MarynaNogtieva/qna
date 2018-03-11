@@ -5,20 +5,44 @@
 - attachments = @data['attachments']
 - best = @data['best']
 - created_at = @data['created_at']
-- update_at = @data['updated_at']
-
+- updated_at = @data['updated_at']
+- voted = @data['voted']
+- vote_score = @data['vote_score']
 
 
 div id="answer-id-#{answer.id}" class="#{'best-answer' if best}"
   p= answer.body
   -if attachments.length
-        p Attachments:
+        p Attachments: 
         ul
           - $.each attachments, (index, file)=>
             li
-              a href="#{file.file_url}" #{file.file_name}
-  /!render 'common/attachment_list', resource: answer
-  /!render 'common/votes', resource: answer
+              a href="#{file.url}" #{file.filename}    
+  .vote data-id="#{answer.id}"     
+    -if (gon.current_user_id != answer.user_id && gon.is_user_signed_in)
+      .vote-for
+        form.button_to action="/questions/#{question_id}" data-type="json" data-remote="true" method="post" 
+          input data-remote="true" type="submit" value="+" class="vote-for-btn  #{'hide' if voted}" 
+      .vote-score 0
+      .vote-against
+        form.button_to action="/questions/#{question_id}" data-type="json" data-remote="true" method="post" 
+          input data-remote="true" type="submit" value="-" class="vote-against-btn  #{'hide' if voted}" 
+      .reset-vote
+        form.button_to action="/questions/#{question_id}" data-type="json" data-remote="true" method="post"
+          input data-remote="true" type="submit" value="Reset Vote"  class="reset-vote-btn #{'hide' unless voted}" 
+    -else
+        .vote-score 0
+  p= updated_at .to_s
+  - if gon.current_user_id == answer.user_id 
+    div
+      div#messages
+      p
+        a href="/answers/#{answer.id}" data-remote="true" data-method="delete" data-confirm="Are you sure you wnt to delete this answer?" rel="nofollow" Delete Answer
+    
+      p 
+        a class="edit-answer-link" data-answer-id="107" href="/questions/#{question_id}/answers" Edit Answer
+     
+  
 
 
   
