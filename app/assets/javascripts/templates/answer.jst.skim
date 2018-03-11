@@ -42,6 +42,17 @@ div id="answer-id-#{answer.id}" class="#{'best-answer' if best}"
       p 
         a class="edit-answer-link" data-answer-id="107" href="/questions/#{question_id}/answers" Edit Answer
      
+
+      form.edit_answer, id="edit_answer_#{answer.id}" enctype="multipart/form-data" action="/answers/#{answer.id}" accept-charset="UTF-8" data-remote="true" method="post"
+        div id="answer-errors-#{answer.id}"
+        label for="answer_body" Edit Your Answer
+        textarea name="answer[body]" id="answer_body"  "#{body}"
+        a data-cancel-edit-id="#{answer.id}" class="btn-cancel-edit-answer" href="/questions/#{question_id}">Cancel
+        input type="submit" name="commit" value="Save" class="btn-save-updated-answer" data-disable-with="Save"
+        - if gon.current_user_id == answer.question.user_id  && !best
+        form class="button_to" method="post" action="/answers/#{answer.id}/best_answer" data-remote="true"
+          input type="submit" value="Best Answer"
+      
   
 
 
