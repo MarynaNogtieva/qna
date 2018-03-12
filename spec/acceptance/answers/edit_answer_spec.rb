@@ -33,7 +33,7 @@ I want to be able to edit it.
 
     scenario 'Author tries edit his/her answer with valid params', js: true do
       # sleep(1000)
-      within ".answers" do
+      within "#answer-id-#{answer.id}" do
         click_on 'Edit Answer'
         expect(page).to have_css "#edit_answer_#{answer.id}"
       
@@ -45,7 +45,7 @@ I want to be able to edit it.
 
         expect(page).to_not have_content answer.body
         expect(page).to have_content 'edited answer'
-        expect(page).to_not have_selector 'textarea'
+        expect(page).to_not have_css '#answer_body'
       end
     end
 
