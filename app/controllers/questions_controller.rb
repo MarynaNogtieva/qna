@@ -56,7 +56,6 @@ class QuestionsController < ApplicationController
         locals: { question: @question }
       )
     )
-    
   end
   
   def load_question

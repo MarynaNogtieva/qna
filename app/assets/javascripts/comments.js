@@ -22,4 +22,25 @@ $(document).on('turbolinks:load',function() {
 
     return false;
   });
+
+  App.cable.subscriptions.create('CommentsChannel', {
+    connected: function() {
+      var questionId = $('div.question').data('id');
+      if(questionId){
+        this.perform('follow',{ id: questionId });
+        console.log('connected comments');
+      }
+    },
+    received: function(data) {
+      var current_user_id = gon.current_user_id 
+      console.log(data);
+      if (data['commentable_type'] === 'question') {
+        
+        $('.question-wrap').find('.all-comments').append(JST["templates/comment"](data)); 
+      }
+      else if (data['commentable_type'] === 'answer'){
+        $('div#answer-id-' + data['commentable_id']).find('.all-comments').append(JST["templates/comment"](data)); 
+      }
+    }
+  });
 });

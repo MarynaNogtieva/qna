@@ -2,7 +2,7 @@
   h3.header-title Question
   .col-sm-1
     =render 'common/votes', resource: @question
-  .col-sm-11
+  div.col-sm-11.question-wrap
     h4.item-title= question.title
     p= question.body
     =render 'common/attachment_list', resource: @question
