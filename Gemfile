@@ -33,21 +33,13 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'slim-rails'
-
 gem 'twitter-bootstrap-rails'
-
 gem 'jquery-rails'
-
 gem 'devise'
-
 gem 'carrierwave'
-
 gem 'cocoon'
-
 gem 'gon'
-
 gem 'skim'
-
 gem 'sprockets'
 
 group :development, :test do

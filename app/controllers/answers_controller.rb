@@ -43,21 +43,10 @@ class AnswersController < ApplicationController
     attachments = @answer.attachments.map do |attach|
       { id: attach.id, filename: attach.file.filename, url: attach.file.url }
     end
+    data = @answer.as_json(include: :attachments).merge(answer: @answer, 
+                                                        voted: @answer.voted?(current_user), 
+                                                        vote_score: @answer.vote_score)
 
-    data = {
-      answer: @answer,
-      id: @answer.id,
-      body: @answer.body,
-      question_id: @answer.question_id,
-      user_id: @answer.user_id,
-      created_at: @answer.created_at,
-      updated_at: @answer.updated_at,
-      best: @answer.best,
-      attachments: attachments,
-      voted: @answer.voted?(current_user),
-      vote_score: @answer.vote_score
-
-    }
 
     ActionCable.server.broadcast("questions_#{@question.id}", 
       data: data
