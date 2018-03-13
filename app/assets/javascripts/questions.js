@@ -49,4 +49,15 @@ $(document).on('turbolinks:load',function() {
        toggleButtons(parent)
     })
   });
+
+
+  App.cable.subscriptions.create('QuestionsChannel', {
+    connected: function() {
+      console.log('connected');
+      this.perform('follow');
+    },
+    received: function(data) {
+      $('div.question-list').append(data);
+    }
+  });
 });

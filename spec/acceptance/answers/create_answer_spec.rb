@@ -38,4 +38,34 @@ I want to be able to answer their question' do
   end
 
 
+  context 'multiple sessions' do
+    scenario "question appears on another user's page", js: true do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        fill_in 'Your Answer', with: 'Answer test for the test question'
+        click_on 'Answer a question'
+        
+        within '.answers' do
+          expect(page).to have_content 'Answer test for the test question'
+        end
+        sleep(5)
+      end
+
+      Capybara.using_session('guest') do
+        within '.answers' do
+          expect(page).to have_content 'Answer test for the test question'
+        end
+      end
+    end
+  end
+
+
 end

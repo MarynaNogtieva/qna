@@ -1,0 +1,4 @@
+div
+  p.comment-body= @comment.body
+  p.user-email= @user_email
+  p.comment-date= @comment.updated_at

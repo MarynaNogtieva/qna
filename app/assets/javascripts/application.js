@@ -12,6 +12,7 @@
 //
 //= require jquery3
 //= require rails-ujs
+//= require skim
 //= require cocoon
 //= require twitter/bootstrap
 //= require turbolinks

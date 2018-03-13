@@ -8,10 +8,17 @@ Rails.application.routes.draw do
     post :reset_vote, on: :member
   end
 
-  resources :questions, shallow: true, concerns: :votes do
-    resources :answers, only: %i[destroy create update], concerns: :votes do
+  concern :comments do
+    resources :comments,  only: [:create]
+  end
+
+  resources :questions, shallow: true, concerns: [:votes, :comments]  do
+    resources :answers, only: %i[destroy create update], concerns: [:votes, :comments] do
       post :best_answer, on: :member
     end
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  
+  # setup connection with the server
+  mount ActionCable.server => '/cable'
 end

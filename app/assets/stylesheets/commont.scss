@@ -1,0 +1,100 @@
+.navbar-custom{
+    background:  #46cbb2;
+    margin-top: 2%;
+  
+   li > a, a.navbar-brand{
+      color: #fff;
+    }
+  
+    a.navbar-brand{
+      font-size: 30px;
+      font-weight: 500;
+    }
+  
+    li > a {
+      font-size: 22px;
+    }
+  
+    li > a:hover,
+    li > a:active{
+      background:  #2d8574;
+    }
+  }
+  
+  /* VOTES */
+  .vote{
+    margin-top: 10px;
+  }
+  .vote-for-btn, .vote-against-btn {
+    border: none;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .vote-for-btn {
+    color: #0c6203;
+  }
+
+  .vote-against-btn {
+    color: #dc2a0e;
+  }
+
+  .vote-score, .vote-for, .vote-against{
+    text-align: center;
+  }
+
+  .reset-vote-btn{
+    margin-top: 10px;
+    border: none;
+    background: #ffe070;
+    padding: 3px 7px;
+  }
+
+  .vote-score {
+    border-radius: 50%;
+    background: rgba(190, 189, 189, .6);
+    width: 30px;
+    margin: 0 auto;
+    padding:5px;
+  }
+
+/*HEADERS*/
+
+.item-title{
+  color: #018F53;
+}
+.header-title{
+  color: #78756A;
+}
+
+/* COMMENTS */
+
+#comment_body{
+  width: 50%;
+}
+
+.btn-comment{
+  margin-top: 10px;
+  border: none;
+  background: #28D2D4;
+  padding: 3px 7px;
+  width:50%;
+}
+
+.all-comments{
+  font-size: 10px;
+  div{
+    width:50%;
+    margin:20px;
+  }
+}
+
+p.user-email{
+  font-size: 8px;
+}
+
+p.comment-date{
+  font-size: 6px;
+}
+

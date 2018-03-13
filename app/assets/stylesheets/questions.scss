@@ -4,3 +4,30 @@
 .edit-question, .hide{
   display: none;
 }
+
+.edit-question {
+  width: 50%;
+}
+
+.question-item {
+    padding: 5px;
+    font-family: 'source_sans_proregular',Helvetica,Arial,sans-serif;
+    
+    font-weight: normal;
+    color: #013763;
+    
+    h4 {
+      font-size: 20px;
+    }
+    p {
+      font-size: 14px;
+    }
+  }
+
+div.question-links{
+  p{
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 12px
+  }
+}

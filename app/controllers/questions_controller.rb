@@ -1,8 +1,10 @@
 
 class QuestionsController < ApplicationController
   include VoteAction
+  
   before_action :authenticate_user!, except: %i[index show update]
   before_action :load_question, only: %i[update show destroy]
+  after_action :publish_question, only: %i[create]
   
   def index
     @questions = Question.all
@@ -11,6 +13,8 @@ class QuestionsController < ApplicationController
   def show
     @answer = Answer.new
     @answer.attachments.build
+    gon.is_user_signed_in = user_signed_in?
+    gon.question_owner = @question.user_id == (current_user && current_user.id)
   end
   
   def new
@@ -43,6 +47,16 @@ class QuestionsController < ApplicationController
   end
   
   private
+
+  def publish_question
+    return if @question.errors.any?
+    ActionCable.server.broadcast('questions', 
+      ApplicationController.render(
+        partial: 'common/questions_list',
+        locals: { question: @question }
+      )
+    )
+  end
   
   def load_question
     @question = Question.find(params[:id])
