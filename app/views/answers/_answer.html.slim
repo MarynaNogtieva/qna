@@ -1,8 +1,9 @@
 div id="answer-id-#{answer.id}" class="#{'best-answer' if answer.best?}"
+  p id="#answer-errors-#{@answer.id}"
   p= answer.body
   =render 'common/attachment_list', resource: answer
   =render 'common/votes', resource: answer
-
+ 
   p= answer.updated_at.to_s
   - if current_user&.author_of?(answer)  
     div

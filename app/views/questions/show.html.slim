@@ -9,6 +9,7 @@
 
   .row 
   - if user_signed_in?
+    p  id="answer-errors"
     = form_for [ @question, @answer ], remote: true do |f|
      = f.label :body, 'Your Answer'
      = f.text_area :body
