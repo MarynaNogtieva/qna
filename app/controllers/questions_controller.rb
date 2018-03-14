@@ -6,7 +6,7 @@ class QuestionsController < ApplicationController
   
   before_action :authenticate_user!, except: %i[index show update]
   before_action :load_question, only: %i[update show destroy]
-  
+  before_action :build_answer, only: %i[show]
   after_action :publish_question, only: %i[create]
   
   def index
@@ -14,8 +14,6 @@ class QuestionsController < ApplicationController
   end
   
   def show
-    @answer = Answer.new
-    @answer.attachments.build
     gon.is_user_signed_in = user_signed_in?
     gon.question_owner = @question.user_id == (current_user && current_user.id)
     respond_with @question
@@ -40,6 +38,11 @@ class QuestionsController < ApplicationController
   end
   
   private
+  
+  def build_answer
+    @answer = Answer.new
+    @answer.attachments.build
+  end
 
   def publish_question
     return if @question.errors.any?
