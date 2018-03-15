@@ -1,40 +1,29 @@
 class AnswersController < ApplicationController
+  
   include VoteAction
   before_action :authenticate_user!
   before_action :load_question, only: %i[create]
   before_action :load_answer, only: %i[destroy update best_answer ]
   after_action :publish_answer, only: %i[create]
 
-  def create
-    @answer = current_user.answers.new(answer_params)
-    @answer.question = @question
+  respond_to  :js
 
-    if @answer.save
-      flash[:notice] = 'Your was created successfully'
-    else
-      render 'errors', notice: 'Something is wrong'
-    end
+  def create
+    @answer = current_user.answers.new(answer_params.merge(question_id: @question.id))
+    respond_with(@answer.save)
   end
 
   def destroy
-    if current_user.author_of?(@answer)
-      @answer.destroy 
-     else
-      flash.now[:notice] = 'Only an author of the answer can delete it'
-      render 'common/messages'
-    end
+    respond_with(@answer.destroy)  if current_user.author_of?(@answer)
   end
 
   def update
     @answer.update(answer_params) if current_user.author_of?(@answer)
-    @question = @answer.question
+    respond_with(@answer)
   end
 
   def best_answer 
-    if current_user.author_of?(@answer.question)
-      @answer.mark_best
-    end
-    @question = @answer.question
+    @answer.mark_best if current_user.author_of?(@answer.question)
   end
 
   private
@@ -59,6 +48,7 @@ class AnswersController < ApplicationController
 
   def load_answer
     @answer = Answer.find(params[:id])
+    @question = @answer.question
   end
 
   def answer_params

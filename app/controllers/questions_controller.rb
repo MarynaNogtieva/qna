@@ -1,52 +1,48 @@
 
 class QuestionsController < ApplicationController
   include VoteAction
+
+  respond_to :html, :json, :js
   
   before_action :authenticate_user!, except: %i[index show update]
   before_action :load_question, only: %i[update show destroy]
+  before_action :build_answer, only: %i[show]
   after_action :publish_question, only: %i[create]
   
   def index
-    @questions = Question.all
+    respond_with(@questions = Question.all)
   end
   
   def show
-    @answer = Answer.new
-    @answer.attachments.build
     gon.is_user_signed_in = user_signed_in?
     gon.question_owner = @question.user_id == (current_user && current_user.id)
+    respond_with @question
   end
   
   def new
     @question = Question.new
-    @question.attachments.build
+    respond_with (@question.attachments.build)
   end
   
   def create
-    @question = current_user.questions.new(question_params)
-    if @question.save
-      flash[:notice] = 'Your question was successfully created.'
-      redirect_to @question
-    else
-      render :new
-    end
+    respond_with(@question = current_user.questions.create(question_params))
   end
 
   def update
     @question.update(question_params) if current_user.author_of?(@question)
+    respond_with @question
   end
 
   def destroy
-    if current_user.author_of?(@question)
-      @question.destroy
-      flash[:notice] = 'Your question was successfully deleted.'
-    else
-      flash[:notice] = 'You dont have the right to delete this quesiton'
-    end
-    redirect_to questions_path
+    respond_with(@question.destroy) if current_user.author_of?(@question)
   end
   
   private
+  
+  def build_answer
+    @answer = Answer.new
+    @answer.attachments.build
+  end
 
   def publish_question
     return if @question.errors.any?
