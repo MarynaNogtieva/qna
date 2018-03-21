@@ -62,9 +62,12 @@ RSpec.configure do |config|
 
   #use extend because we use before blok, because before is used as class method in RSpec
   config.extend ControllerMacros, type: :controller
+
+  config.include OmniauthMacros
   
 end
 
+OmniAuth.config.test_mode = true
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
