@@ -62,11 +62,12 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   # config.include AcceptanceHelpers, type: :feature
 
+  config.include Devise::TestHelpers, type: :controller
+
   #use extend because we use before blok, because before is used as class method in RSpec
   config.extend ControllerMacros, type: :controller
 
   config.include OmniauthMacros
-  
 end
 
 OmniAuth.config.test_mode = true

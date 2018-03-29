@@ -16,6 +16,8 @@ I want to be able to edit it.
   end
   scenario 'Not an author cannot see edit link' do
     sign_in(not_author)
+    confirm_email(not_author.email)
+    sign_in(not_author)
 
     visit question_path(question)
     expect(page).to_not have_link 'Edit'
@@ -23,6 +25,8 @@ I want to be able to edit it.
 
   describe 'An authenticated user and an author of the answer' do
     before do
+      sign_in(author)
+      confirm_email(author.email)
       sign_in(author)
       visit question_path(question)
     end

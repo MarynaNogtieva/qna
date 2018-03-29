@@ -24,7 +24,6 @@ RSpec.configure do |config|
   Capybara.server_port = 3001
 
 
-  ActionDispatch::IntegrationTest
   Capybara.app_host = 'http://myapp.local:3001'
   # Capybara.server_port = "3030"
   # Capybara.javascript_driver = :poltergeist
@@ -42,6 +41,7 @@ RSpec.configure do |config|
 
   config.include AcceptanceHelpers, type: :feature
   config.include WaitForAjax, type: :feature
+  config.include ConfirmEmailMacros, type: :feature
   
   config.use_transactional_fixtures = false
 

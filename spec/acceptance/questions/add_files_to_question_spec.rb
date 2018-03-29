@@ -9,7 +9,10 @@ given(:user) { create (:user) }
 
   background do
     sign_in(user)
+    confirm_email(user.email)
+    sign_in(user)
     visit new_question_path
+    
     fill_in 'Title', with: 'Test question'
     fill_in 'Body', with: 'text text'
   end

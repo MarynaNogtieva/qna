@@ -12,6 +12,8 @@ I want to be able to delete answer to a question' do
 
   scenario 'The author of the question tries to remove it', js: true do
     sign_in(author)
+    confirm_email(author.email)
+    sign_in(author)
 
     visit question_path(question)
     accept_alert do
@@ -21,6 +23,8 @@ I want to be able to delete answer to a question' do
   end
 
   scenario 'Not an author cannot delete an answer' do
+    sign_in(not_author)
+    confirm_email(not_author.email)
     sign_in(not_author)
 
     visit question_path(question)

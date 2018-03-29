@@ -7,6 +7,8 @@ Want to be able to signout' do
   given(:user) { create(:user) }
   scenario 'Signed in user tries to logout' do
     sign_in(user)
+    confirm_email(user.email)
+    sign_in(user)
     click_on 'Logout'
 
     expect(page).to have_content 'Signed out successfully.'

@@ -7,7 +7,8 @@ feature 'User sign in', '
 ' do
   given(:user) { create(:user) }
   scenario 'Registered user tries to sign in' do
-    
+    sign_in(user)
+    confirm_email(user.email)
     sign_in(user)
 
     expect(page).to have_content 'Signed in successfully'

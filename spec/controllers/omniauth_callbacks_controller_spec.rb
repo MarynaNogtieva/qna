@@ -1,23 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe OmniauthCallbacksController, type: :controller do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, email: 'test@example.com') }
 
   describe 'facebook' do
     before do
       request.env["devise.mapping"] = Devise.mappings[:user]
       request.env["omniauth.auth"] = mock_auth_hash(:facebook)
+      user.confirm
     end
 
     context 'new user' do
       before { get :facebook }
 
-      it 'redirects to new_user_session_path' do
+      it 'redirects to root, once the user has confirmed email' do
         expect(response).to redirect_to(root_path)
       end
 
       it 'creates new user' do
-        expect(controller.current_user).to_not eq nil
+        email = request.env["omniauth.auth"].info.email
+        expect(email).to eq User.first.email
       end
     end
 
@@ -28,7 +30,7 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
         get :facebook
       end
 
-      it 'redirects to root_path' do
+      it 'redirects to root path' do
         expect(response).to redirect_to(root_path)
       end
 
