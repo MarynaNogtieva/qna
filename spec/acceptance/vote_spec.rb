@@ -12,6 +12,8 @@ feature 'Votes', '
 
   scenario 'author cannot vote for his/her question' do
     sign_in(author)
+    confirm_email(author.email)
+    sign_in(author)
     visit question_path(question)
 
     within "#question-id-#{question.id}" do
@@ -21,6 +23,8 @@ feature 'Votes', '
   end
 
   scenario 'author cannot vote for his/her answer' do
+    sign_in(author)
+    confirm_email(author.email)
     sign_in(author)
     visit question_path(question)
 
@@ -32,6 +36,8 @@ feature 'Votes', '
   
   describe 'Question' do
     scenario 'non-author votes the question up', js: true do
+      sign_in(user)
+      confirm_email(user.email)
       sign_in(user)
       visit question_path(question)
 
@@ -45,6 +51,8 @@ feature 'Votes', '
 
     scenario 'non-author votes the question  down', js: true do
       sign_in(user)
+      confirm_email(user.email)
+      sign_in(user)
       visit question_path(question)
 
       within "#question-id-#{question.id}" do
@@ -56,6 +64,8 @@ feature 'Votes', '
     end
 
     scenario 'non-author resets the vote for question', js: true do
+      sign_in(user)
+      confirm_email(user.email)
       sign_in(user)
       visit question_path(question)
 
@@ -71,6 +81,8 @@ feature 'Votes', '
 
   describe 'Answer vote' do
     before do
+      sign_in(user)
+      confirm_email(user.email)
       sign_in(user)
       visit question_path(question)
     end

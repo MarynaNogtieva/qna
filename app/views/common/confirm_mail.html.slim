@@ -1,0 +1,7 @@
+= form_tag auth_register_path, method: :post do
+  .form-group
+     = label_tag 'auth[info][email]', 'Email'
+     = email_field 'auth[info]', :email
+
+  = submit_tag 'Confirm email'
+

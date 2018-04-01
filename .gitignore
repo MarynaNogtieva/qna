@@ -47,6 +47,9 @@ certs/
 /config/application.yml
 .zeus.sock
 
+# Ignore secrets
+/config/secrets.yml
+
 dump.rdb
 config/*.sphinx.conf
 db/sphinx
@@ -54,4 +57,5 @@ db/sphinx
 
 node_modules/
 .eslintrc.json
+
 

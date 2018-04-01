@@ -13,6 +13,8 @@ I want to be able to mark the answer as the best one' do
   describe 'An authenticated user as an author of the question ' do
     before do
       sign_in(author)
+      confirm_email(author.email)
+      sign_in(author)
       visit question_path(question)
     end
 
@@ -52,6 +54,8 @@ I want to be able to mark the answer as the best one' do
   end
 
   scenario 'Not an author cannot mark answer to be the best' do
+    sign_in(not_author)
+    confirm_email(not_author.email)
     sign_in(not_author)
 
     visit question_path(question)

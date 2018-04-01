@@ -13,8 +13,12 @@ feature 'User sign up', '
     fill_in 'Password confirmation', with: '0987654321'
     click_on 'Sign up'
 
-    expect(page).to have_content 'Welcome! You have signed up successfully.'
-    expect(page).to have_link 'Logout'
+    click_on 'Sign in'
+    fill_in 'Email', with: 'newuser@test.com'
+    fill_in 'Password', with: '0987654321'
+    confirm_email('newuser@test.com')
+    
+    expect(page).to have_content 'Your email address has been successfully confirmed'
   end
 
   scenario 'User sign up with invalid attributes' do

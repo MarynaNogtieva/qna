@@ -11,6 +11,8 @@ I want to be able to delete question' do
 
   scenario 'The author of the question tries to remove it' do
     sign_in(author)
+    confirm_email(author.email)
+    sign_in(author)
 
     visit question_path(question)
     click_on 'Delete Question'
@@ -20,6 +22,8 @@ I want to be able to delete question' do
   end
 
   scenario 'Not an author cannot delete a question' do
+    sign_in(not_author)
+    confirm_email(not_author.email)
     sign_in(not_author)
 
     visit question_path(question)

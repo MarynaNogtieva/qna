@@ -11,6 +11,8 @@ I want to be able to attach files to it' do
 
   background do
     sign_in(user)
+    confirm_email(user.email)
+    sign_in(user)
     visit question_path(question)
 
     fill_in 'Your Answer', with: 'Answer test for the test question'

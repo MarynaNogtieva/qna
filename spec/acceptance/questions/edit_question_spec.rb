@@ -21,6 +21,8 @@ I want to be able to edit the question
   describe 'An authenticated user' do
     scenario 'Not an author cannot see edit link' do
       sign_in(not_author)
+      confirm_email(not_author.email)
+      sign_in(not_author)
 
       visit question_path(question)
       within '.question' do
@@ -29,6 +31,8 @@ I want to be able to edit the question
     end
     scenario 'Author can see edit link' do 
       sign_in(author)
+      confirm_email(author.email)
+      sign_in(author)
 
       visit question_path(question)
       within '.question' do
@@ -36,6 +40,8 @@ I want to be able to edit the question
       end
     end
     scenario 'Author tries edit his/her question with valid params', js: true do
+      sign_in(author)
+      confirm_email(author.email)
       sign_in(author)
       visit question_path(question)
 
@@ -53,6 +59,8 @@ I want to be able to edit the question
 
     scenario 'Author tries to upload files while editing a question', js: true do
       sign_in(author)
+      confirm_email(author.email)
+      sign_in(author)
       visit question_path(question)
 
       add_files_to_question
@@ -62,6 +70,8 @@ I want to be able to edit the question
     end
 
     scenario 'Author tries to delete files while editing his/her answer', js: true do
+      sign_in(author)
+      confirm_email(author.email)
       sign_in(author)
       visit question_path(question)
       add_files_to_question
