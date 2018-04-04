@@ -8,7 +8,7 @@
       = render @question.answers.sort_by_best
 
   .row 
-  - if user_signed_in?
+  - if can?(:new, Answer)
     p  id="answer-errors"
     = form_for [ @question, @answer ], remote: true do |f|
      = f.label :body, 'Your Answer'
