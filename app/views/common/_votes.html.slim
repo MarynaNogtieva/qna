@@ -4,6 +4,7 @@
    .vote-for= button_to '+', { remote: true, data: { type: :json } }, { class: 'vote-for-btn ' "#{'hide' if resource.voted?(current_user)}" }
    .vote-score= resource.vote_score
    .vote-against= button_to '-', { remote: true, data: { type: :json } }, { class: 'vote-against-btn ' "#{'hide' if resource.voted?(current_user)}" }
+   - if can?(:reset_vote, resource)
    .reset-vote= button_to 'Reset Vote', { remote: true, data: { type: :json } }, { class: 'reset-vote-btn ' "#{'hide' unless resource.voted?(current_user)}" }
   - else
    .vote-score= resource.vote_score

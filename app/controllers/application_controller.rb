@@ -11,9 +11,11 @@ class ApplicationController < ActionController::Base
   check_authorization unless: :devise_controller?
 
   rescue_from CanCan::AccessDenied do |exception|
-    format.js   { head :forbidden }
-    format.json { head :forbidden }
-    format.html { redirect_to root_path, notice: exception.message }
+    respond_to do |format|
+      format.js   { head :forbidden }
+      format.json { head :forbidden }
+      format.html { redirect_to root_path, notice: exception.message }
+    end
   end
   
   def gon_user

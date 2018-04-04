@@ -18,7 +18,7 @@ class Ability
 
   def load_aliases
     alias_action :update, :destroy, to: :update_destory
-    alias_action :vote_for, :vote_against, :reset_vote, to: :vote
+    alias_action :vote_for, :vote_against, to: :vote
   end
 
   def guest_abilities
@@ -32,12 +32,20 @@ class Ability
   def user_abilities
     guest_abilities
     can :create, [ Question, Answer, Comment ]
-    can :update_destory, [ Question, Answer ], { user: user }
+    can :update_destory, [ Question, Answer ], { user_id: user.id }
     can :comment, [Question, Answer]
 
     can :best_answer, Answer, question: { user_id: user.id }
     can :vote, [Question, Answer] do |item|
       !user.author_of?(item)
+    end
+
+    can :reset_vote, [Question, Answer] do |item|
+      if !user.author_of?(item)
+        item.votes.each do |vote|
+          user.author_of?(vote)
+        end
+      end
     end
   end
 end
