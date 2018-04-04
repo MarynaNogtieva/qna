@@ -41,11 +41,7 @@ class Ability
     end
 
     can :reset_vote, [Question, Answer] do |item|
-      if !user.author_of?(item)
-        item.votes.each do |vote|
-          user.author_of?(vote)
-        end
-      end
+      !item.voted?(user) && !user.author_of?(item)
     end
   end
 end
