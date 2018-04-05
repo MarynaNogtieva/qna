@@ -8,7 +8,7 @@
     =render 'common/attachment_list', resource: @question
     
 
-    - if current_user&.author_of?(question)
+    - if can?(:update, question)
       div.question-links
         p= link_to 'Delete Question', question_path(question), method: :delete
         p= link_to 'Edit Question',nil, class: 'edit-question-link', data: {question_id: @question.id}

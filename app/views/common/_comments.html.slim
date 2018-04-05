@@ -8,7 +8,7 @@ h6.header-title Comments
             p.comment-body= comment.body
             p.user-email= comment.user.email
             p.comment-date= comment.updated_at
-  -if user_signed_in?
+  -if can?(:comment, resource)
     = form_for [resource, resource.comments.build], remote: true, data: { type: :json } do |f|
       = f.text_area :body, class: 'form-control item-comment'
       = f.submit 'Place a comment', class: 'btn-comment'

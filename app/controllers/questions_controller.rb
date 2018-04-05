@@ -8,7 +8,10 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: %i[update show destroy]
   before_action :build_answer, only: %i[show]
   after_action :publish_question, only: %i[create]
-  
+
+  # load corresponding object, here we do not need load question  -  load_and_authorize_resource
+  authorize_resource
+
   def index
     respond_with(@questions = Question.all)
   end
