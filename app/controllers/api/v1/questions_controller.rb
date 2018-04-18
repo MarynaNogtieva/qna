@@ -1,5 +1,5 @@
 class Api::V1::QuestionsController < Api::V1::BaseController
-  skip_authorization_check
+  authorize_resource
   def index
     @questions = Question.all
     respond_with @questions
