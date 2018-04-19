@@ -30,6 +30,22 @@ describe 'Answers API' do
       %w[body created_at updated_at].each do |attr|
         it { expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("answer/#{attr}")}
       end
+
+      context 'comments' do
+        it { expect(response.body).to have_json_size(1).at_path("answer/comments") }
+        %w(id body created_at).each do |attr|
+          it { expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json).at_path("answer/comments/0/#{attr}") }
+        end
+      end
+      context 'attachments' do
+        it { expect(response.body).to have_json_size(1).at_path("answer/attachments") }
+        
+        %w[url].each do |attr|
+          it "answers attachment object contains #{attr}" do
+            expect(response.body).to be_json_eql(attachment.file.send(attr.to_sym).to_json).at_path("answer/attachments/0/#{attr}")
+          end
+        end
+      end
     end
   end
 
