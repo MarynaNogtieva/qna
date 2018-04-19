@@ -67,6 +67,8 @@ describe 'Questions API' do
       let(:user) { @user || create(:user) }
       let(:access_token) { create(:access_token) }
       let!(:question) { create(:question) }
+      let!(:comment) { create(:comment, commentable: question, user: user) }
+      let!(:attachment) { create(:attachment_api, attachable: question) }
 
       before { get "/api/v1/questions/#{question.id}", params: { format: :json, access_token: access_token.token } }
 
@@ -75,15 +77,30 @@ describe 'Questions API' do
       %w[id title body created_at updated_at].each do |attr|
         it { expect(response.body).to be_json_eql(question.send(attr.to_sym).to_json).at_path("question/#{attr}") }
       end
-      # context 'comments' do
-      #   it 'is included in a question object' do
-      #     expect(response.body).to have_json_size(1).at_path('questions/0/comments')
-      #   end
+      context 'comments' do
+        it 'is included in a question object' do
+          expect(response.body).to have_json_size(1).at_path("question/comments")
+        end
 
-      #   %w[id body commentable_type commentable_id user_id created_at updated_at].each do |attr|
-      #     it { expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("questions/0/answers/0/#{attr}") }
-      #   end
-      # end
+        %w[id body created_at updated_at user_id].each do |attr|
+          it "questions comment object contains #{attr}" do
+            expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json).at_path("question/comments/0/#{attr}")
+          end
+        end
+      end
+
+      context 'attachments' do
+        it 'is included in a question object' do
+          expect(response.body).to have_json_size(1).at_path("question/attachments")
+        end
+
+        %w[url].each do |attr|
+          it "questions attachment object contains #{attr}" do
+            expect(response.body).to be_json_eql(attachment.file.send(attr.to_sym).to_json).at_path("question/attachments/0/#{attr}")
+          end
+        end
+
+      end
     end
   end
 end
