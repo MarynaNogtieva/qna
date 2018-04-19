@@ -99,7 +99,32 @@ describe 'Questions API' do
             expect(response.body).to be_json_eql(attachment.file.send(attr.to_sym).to_json).at_path("question/attachments/0/#{attr}")
           end
         end
+      end
+    end
+  end
 
+  describe 'POST /create' do
+    context 'unauthorized' do
+      it 'returns 401 status if there is no access token' do
+        post '/api/v1/questions/', params: { action: :create, format: :json }
+        expect(response.status).to eq 401
+      end
+
+      it 'returns 401 status if access token is invalid' do
+        post '/api/v1/questions/', params: { format: :json, access_token: '1234' }
+        expect(response.status).to eq 401
+      end
+    end
+
+    context 'authorized' do
+      let(:access_token) { create(:access_token) }
+
+      before { post '/api/v1/questions/', params: { action: :create, format: :json, access_token: access_token.token, question: attributes_for(:question) } }
+
+      it { expect(response).to be_success }
+
+      it 'adds new question to the database' do
+        expect{ post '/api/v1/questions/', params: { action: :create, format: :json, access_token: access_token.token, question: attributes_for(:question)} }.to change { Question.count }.by(1)
       end
     end
   end
