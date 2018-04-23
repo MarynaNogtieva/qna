@@ -16,10 +16,12 @@ I want to be able to delete answer to a question' do
     sign_in(author)
 
     visit question_path(question)
-    accept_alert do
+    # accept_alert do
       click_on 'Delete Answer'
+      a = page.driver.browser.switch_to.alert
+      a.accept
       expect(page).to_not have_content answer.body
-    end
+    # end
   end
 
   scenario 'Not an author cannot delete an answer' do
