@@ -106,40 +106,6 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-  describe 'POST #vote_for' do
-    sign_in_user
-
-    it 'increases "voted-for" score for non-author question' do
-      expect { post :vote_for, params: { question_id: question, id: other_answer } }.to change(Vote, :count).by(1)
-    end
-
-    it 'does not allow an author to vote for his/her question' do
-      expect { post :vote_for, params: { question_id: question, id: answer } }.to_not change(Vote, :count)
-    end
-  end
-
-  describe 'POST #vote_against' do
-    sign_in_user
-
-    it 'increases "voted-against" score for non-author question' do
-      expect { post :vote_against, params: { question_id: question, id: other_answer } }.to change(Vote, :count).by(1)
-    end
-
-    it 'does not allow an author to vote against his/her question' do
-      expect { post :vote_against, params: { question_id: question, id: answer } }.to_not change(Vote, :count)
-    end
-  end
-
-  describe 'POST #reset_vote' do
-    sign_in_user
-    before {  post :vote_for, params: { question_id: question, id: other_answer } }
-
-    it 'resetes vote' do
-      expect { post :reset_vote, params: { question_id: question, id: other_answer } }.to change(Vote, :count).by(-1)
-    end
-
-    it 'does not allow an author to reset vote for his/her question' do
-      expect { post :reset_vote, params: { question_id: question, id: answer } }.to_not change(Vote, :count)
-    end
-  end
+  it_behaves_like 'Votable Controller'
+  let!(:object_name) { :answer }
 end
