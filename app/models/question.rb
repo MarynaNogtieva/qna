@@ -9,12 +9,4 @@ class Question < ApplicationRecord
   validates :title, :body, presence: true
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
-
-  # after_create :calculate_reputation
-
-  # private
-
-  # def calculate_reputation
-
-  # end
 end
