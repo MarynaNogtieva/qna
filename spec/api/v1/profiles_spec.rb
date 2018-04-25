@@ -34,7 +34,7 @@ describe 'Profile API' do
   end
 
 
-  describe 'GET ' do
+  describe 'GET /profiles' do
     it_behaves_like 'API Authenticable'
     
     context 'authorized' do
