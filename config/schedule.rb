@@ -19,8 +19,8 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :chronic_options, hours24: true
+# set :chronic_options, hours24: true
 
-every :day, at: '12:15' do
-  runner User.send_daily_digest
-end
+# every :day, at: '12:15' do
+#   runner User.send_daily_digest
+# end
