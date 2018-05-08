@@ -90,4 +90,16 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '.send_daily_digest' do
+    let(:users) { create_list(:user, 5) }
+
+    it 'should send daily digest to all users' do
+      users.each do |user|
+        expect(DailyMailer).to receive(:digest).with(user)
+      end
+
+      User.send_daily_digest
+    end
+  end
 end
