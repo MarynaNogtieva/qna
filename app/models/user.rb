@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :votes
   has_many :authorizations
 
+  has_many :subscriptions, dependent: :destroy
+
   def author_of?(item)
     id == item.user_id
   end
