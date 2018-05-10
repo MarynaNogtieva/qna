@@ -40,6 +40,10 @@ class Ability
       !user.author_of?(item)
     end
 
+    can :subscribe, Question do |item|
+      !item.subscribed?(user)
+    end
+
     can :reset_vote, [Question, Answer] do |item|
       item.votes.where(user: user).where(votable: item) && !user.author_of?(item)
     end

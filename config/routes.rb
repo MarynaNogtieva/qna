@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   end
 
   resources :questions, shallow: true, concerns: [:votes, :comments]  do
+    post :subscribe, on: :member
     resources :answers, only: %i[destroy create update], concerns: [:votes, :comments] do
       post :best_answer, on: :member
     end

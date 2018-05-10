@@ -11,4 +11,13 @@ class Question < ApplicationRecord
   validates :title, :body, presence: true
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
+
+
+  def add_subscription(user)
+    subscriptions.create!(user: user, question: self)
+  end
+
+  def subscribed?(user)
+    subscriptions.exists?(user: user)
+  end
 end

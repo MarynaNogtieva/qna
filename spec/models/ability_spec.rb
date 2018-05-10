@@ -45,6 +45,8 @@ RSpec.describe Ability, type: :model do
       it { should_not be_able_to :vote_for, question, user: user }
       it { should_not be_able_to :vote_against, question,  user: user  }
       it { should_not be_able_to :reset_vote, question, user: user  }
+
+      it { should be_able_to :subscribe, question, user: user }
     end
 
     context 'Answer' do

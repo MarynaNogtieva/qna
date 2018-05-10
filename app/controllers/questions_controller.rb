@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
   respond_to :html, :json, :js
   
   before_action :authenticate_user!, except: %i[index show update]
-  before_action :load_question, only: %i[update show destroy]
+  before_action :load_question, only: %i[update show destroy subscribe]
   before_action :build_answer, only: %i[show]
   after_action :publish_question, only: %i[create]
 
@@ -38,6 +38,11 @@ class QuestionsController < ApplicationController
 
   def destroy
     respond_with(@question.destroy) if current_user.author_of?(@question)
+  end
+
+  def subscribe
+    @subscription = @question.add_subscription(current_user)
+    # respond_with(@question.add_subscription(current_user), location: @question)
   end
   
   private
