@@ -41,8 +41,9 @@ class QuestionsController < ApplicationController
   end
 
   def subscribe
-    @subscription = @question.add_subscription(current_user)
-    # respond_with(@question.add_subscription(current_user), location: @question)
+    # @subscription = @question.add_subscription(current_user)
+
+  respond_with(@question.add_subscription(current_user), template: 'common/subscribe')
   end
   
   private

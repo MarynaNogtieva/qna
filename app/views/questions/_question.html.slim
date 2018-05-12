@@ -4,8 +4,10 @@
     =render 'common/votes', resource: @question
   div.col-sm-11.question-wrap
     h4.item-title= question.title
+    =render 'common/subscription', resource: @question
     p= question.body
     =render 'common/attachment_list', resource: @question
+    
     
 
     - if can?(:update, question)
