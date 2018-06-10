@@ -1,3 +1,7 @@
--if can?(:subscribe, @question)
+
   .subscription
-    = button_to 'Subscribe', subscribe_question_path(@question), remote: true, id: 'susbcribe-btn'
+    -if can?(:subscribe, @question)
+      = button_to 'Subscribe', subscribe_question_path(@question), remote: true, id: 'susbcribe-btn', class: "#{'hide' if @question.subscribed?(current_user)}"
+
+    -if can?(:unsubscribe, @question)
+      = button_to 'Unsubscribe', unsubscribe_question_path(@question), method: :delete, remote: true, id: 'unsusbcribe-btn', class: "#{'hide' if !@question.subscribed?(current_user)}"

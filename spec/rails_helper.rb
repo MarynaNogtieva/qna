@@ -4,7 +4,7 @@ require 'capybara/email/rspec'
 require 'cancan/matchers'
 require 'sidekiq/testing'
 
-Sidekiq::Testing.inline!
+Sidekiq::Testing.fake!
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)

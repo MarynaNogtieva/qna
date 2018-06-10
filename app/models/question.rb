@@ -12,12 +12,23 @@ class Question < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
+  after_create :subscribe_owner
 
   def add_subscription(user)
-    subscriptions.create!(user: user, question: self)
+    subscriptions.create!(user: user)
   end
 
   def subscribed?(user)
     subscriptions.exists?(user: user)
+  end
+
+  def remove_subscription(user)
+    subscriptions.where(user: user).destroy_all
+  end
+
+  private
+
+  def subscribe_owner
+    subscriptions.create!(user: user)
   end
 end

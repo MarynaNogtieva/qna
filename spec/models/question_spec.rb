@@ -36,6 +36,12 @@ RSpec.describe Question, type: :model do
     end
   end
 
+  describe '#remove_subscriptions' do
+    it 'unsubscribes user from a question' do
+      expect(question.subscriptions).to_not include(question.remove_subscription(:other_user))
+    end
+  end
+
   let!(:object_name) { :question }
   it_behaves_like 'Votable Model'
 end
