@@ -1,2 +1,6 @@
-h1 DailyMailer#digest
-p = @greeting + ", find me in app/views/daily_mailer/digest.html.slim"
+h1 @greeting
+h1 Here are questions for the last 24 hours
+-@questions.each do |question|
+  p= question.title
+  p= link_to "Check Out The Question", question
+

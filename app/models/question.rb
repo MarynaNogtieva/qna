@@ -12,6 +12,8 @@ class Question < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
+  scope :last_day, -> { where(created_at: 24.hours.ago..Time.now) }
+
   after_create :subscribe_owner
 
   def add_subscription(user)

@@ -22,5 +22,7 @@
 # set :chronic_options, hours24: true
 
 # every :day, at: '12:15' do
-#   runner User.send_daily_digest
+#   # we can use either perform_now or perform_later
+#   # because this will perform in a separate process
+#   runner 'DailyDigestJob.perform_now'
 # end
