@@ -4,7 +4,7 @@ class NewAnswerNotificationJob < ApplicationJob
   def perform(answer)
     subscribtions = answer.question.subscriptions
     subscribtions.each do |subscription|
-      next if answer.user == subscription.user
+      next if subscription.user.author_of?(answer)
       AnswerMailer.notifier(answer, subscription.user).deliver_later
     end
   end

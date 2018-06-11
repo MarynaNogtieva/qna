@@ -25,6 +25,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :subscriptions, only: %i[create destroy]
+
   concern :votes do
     post :vote_for, on: :member
     post :vote_against, on: :member
@@ -36,10 +38,6 @@ Rails.application.routes.draw do
   end
 
   resources :questions, shallow: true, concerns: [:votes, :comments]  do
-    member do
-      post :subscribe
-      delete :unsubscribe
-    end
     resources :answers, only: %i[destroy create update], concerns: [:votes, :comments] do
       post :best_answer, on: :member
     end

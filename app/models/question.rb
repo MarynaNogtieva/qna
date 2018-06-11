@@ -16,18 +16,7 @@ class Question < ApplicationRecord
 
   after_create :subscribe_owner
 
-  def add_subscription(user)
-    subscriptions.create!(user: user)
-  end
-
-  def subscribed?(user)
-    subscriptions.exists?(user: user)
-  end
-
-  def remove_subscription(user)
-    subscriptions.where(user: user).destroy_all
-  end
-
+ 
   private
 
   def subscribe_owner

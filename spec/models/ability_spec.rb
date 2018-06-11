@@ -25,6 +25,7 @@ RSpec.describe Ability, type: :model do
     let(:non_author_question) { create :question, user: other }
     let(:answer) { create :answer, user: user, question: question }
     let(:non_author_answer) { create :answer, user: other, question: question }
+    let(:user_subscription) { create :subscription, user: user, question: question}
 
     it { should_not be_able_to :manage, :all }
     it { should be_able_to :read, :all }
@@ -43,13 +44,11 @@ RSpec.describe Ability, type: :model do
       it { should be_able_to :vote_against, non_author_question, user: user }
       it { should be_able_to :reset_vote, non_author_question, user: user }
       it { should_not be_able_to :vote_for, question, user: user }
-      it { should_not be_able_to :vote_against, question,  user: user  }
-      it { should_not be_able_to :reset_vote, question, user: user  }
-
-      it { should be_able_to :subscribe, question, user: user }
-
-      it { should be_able_to :unsubscribe, Question }
-    end
+      it { should_not be_able_to :vote_against, question,  user: user }
+      it { should_not be_able_to :reset_vote, question, user: user }
+      it { should be_able_to :create, Subscription }
+      it { should be_able_to :destroy, user_subscription, user: other }
+     end
 
     context 'Answer' do
       it { should be_able_to :update, answer }

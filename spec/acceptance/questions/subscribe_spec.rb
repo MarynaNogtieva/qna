@@ -20,11 +20,10 @@ feature 'Subscriptions', %q{
     confirm_email(author.email)
     sign_in(author)
     create_question
-    # visit question_path(question)
-    within '.subscription' do
-      sleep 0.1
-      expect(page).to have_css "input[type=\"submit\"][value=\"Unsubscribe\"]"
-    end
+    visit question_path(question)
+ 
+    expect(page).to have_css "input[type=\"submit\"][value=\"Unsubscribe\"]"
+ 
   end
 
   describe 'Non-author of question user' do

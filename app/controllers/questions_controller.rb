@@ -39,14 +39,6 @@ class QuestionsController < ApplicationController
   def destroy
     respond_with(@question.destroy) if current_user.author_of?(@question)
   end
-
-  def subscribe
-    respond_with(@question.add_subscription(current_user), template: 'common/subscribe') if !@question.subscribed?(current_user)
-  end
-
-  def unsubscribe
-    respond_with(@question.remove_subscription(current_user), template: 'common/subscribe')
-  end
   
   private
   

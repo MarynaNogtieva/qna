@@ -162,22 +162,22 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe 'POST #subscribe' do
-    sign_in_user
-    subject(:create_subscription) {post :subscribe, params: { id: non_author_question .id, format: :js}}
-    it 'creates subscription for a certain question' do
-      expect { create_subscription }.to change(user.subscriptions, :count).by(1)
-    end
-  end
+  # describe 'POST #subscribe' do
+  #   sign_in_user
+  #   subject(:create_subscription) {post :subscribe, params: { id: non_author_question .id, format: :js}}
+  #   it 'creates subscription for a certain question' do
+  #     expect { create_subscription }.to change(user.subscriptions, :count).by(1)
+  #   end
+  # end
 
-  describe 'DELETE #unsubscribe' do
-    sign_in_user
-    subject(:create_subscription) {post :subscribe, params: { id: non_author_question .id, format: :js}}
-    it 'removes subscription for a certain question' do
-      create_subscription
-      expect { delete :unsubscribe, params: { id: non_author_question.id } }.to change(non_author.subscriptions, :count).by(-1)
-    end
-  end
+  # describe 'DELETE #unsubscribe' do
+  #   sign_in_user
+  #   subject(:create_subscription) {post :subscribe, params: { id: non_author_question .id, format: :js}}
+  #   it 'removes subscription for a certain question' do
+  #     create_subscription
+  #     expect { delete :unsubscribe, params: { id: non_author_question.id } }.to change(non_author.subscriptions, :count).by(-1)
+  #   end
+  # end
 
   it_behaves_like 'Votable Controller'
   let!(:object_name) { :question }
