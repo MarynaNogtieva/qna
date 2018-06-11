@@ -1,11 +1,9 @@
 class NewAnswerNotificationJob < ApplicationJob
   queue_as :mailers
 
-  def perform(answer)
-    subscribtions = answer.question.subscriptions
-    subscribtions.each do |subscription|
-      next if subscription.user.author_of?(answer)
-      AnswerMailer.notifier(answer, subscription.user).deliver_later
+    def perform(answer)
+      answer.question.subscriptions.includes(:user).each do |subscription|
+        AnswerMailer.notifier(answer, subscription.user).try(:deliver_later) unless subscription.user.author_of?(answer)
+      end
     end
-  end
 end
