@@ -31,14 +31,25 @@ class Ability
 
   def user_abilities
     guest_abilities
-    can :create, [ Question, Answer, Comment ]
+    can :create, [ Question, Answer, Comment, Subscription ]
     can :update_destory, [ Question, Answer ], { user_id: user.id }
     can :comment, [Question, Answer]
+    can :destroy, Subscription do |subscription|
+      user.author_of?(subscription)
+    end
 
     can :best_answer, Answer, question: { user_id: user.id }
     can :vote, [Question, Answer] do |item|
       !user.author_of?(item)
     end
+
+    # can :subscribe, Question do |item|
+    #   !item.subscribed?(user)
+    # end
+    
+    # can :unsubscribe, Question do |item|
+    #   item.subscribed?(user)
+    # end
 
     can :reset_vote, [Question, Answer] do |item|
       item.votes.where(user: user).where(votable: item) && !user.author_of?(item)

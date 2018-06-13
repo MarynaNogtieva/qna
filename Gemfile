@@ -51,6 +51,11 @@ gem 'active_model_serializers', '~> 0.9.3'
 # helps convert to json much faster than regular to_json method
 gem 'oj' 
 gem 'oj_mimic_json'
+gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', require: nil
+gem 'whenever', require: false
+# tasks that work well with sidekiq
+gem 'sidetiq'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

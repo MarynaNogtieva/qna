@@ -7,6 +7,7 @@ RSpec.describe User, type: :model do
   it { should have_many(:answers) }
   it { should have_many(:votes) }
   it { should have_many(:authorizations) }
+  it { should have_many(:subscriptions).dependent(:destroy) }
 
   describe '#author_of?' do
     let(:user) { create(:user) }
@@ -88,6 +89,29 @@ RSpec.describe User, type: :model do
         expect(authorization.provider).to eq auth.provider
         expect(authorization.uid).to eq auth.uid
       end
+    end
+  end
+
+  let(:user) { create(:user) }
+  let(:other_user) { create(:user) }
+  let(:question) { create :question, user: user }
+
+  describe '#add_subscription' do
+    it 'subscribes a user to a certain question' do
+      expect(user.subscriptions).to include(user.add_subscription(question))
+    end
+  end
+
+  describe '#subscribed?' do
+    it 'returns true once subscription for certain user was created' do
+      other_user.add_subscription(question)
+      expect(question.subscriptions.where(user_id: other_user.id)).to be_present
+    end
+  end
+
+  describe '#remove_subscriptions' do
+    it 'unsubscribes user from a question' do
+      expect(question.subscriptions).to_not include(other_user.remove_subscription(question))
     end
   end
 end

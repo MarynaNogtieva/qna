@@ -30,7 +30,7 @@ shared_examples_for 'Votable Controller' do
 
   describe 'POST #reset_vote' do
     sign_in_user
-    before {  post :vote_for, params: { id: non_author_votable_object } }
+    before { post :vote_for, params: { id: non_author_votable_object } }
 
     it 'resetes vote' do
       expect { post :reset_vote, params: { id: non_author_votable_object } }.to change(Vote, :count).by(-1)

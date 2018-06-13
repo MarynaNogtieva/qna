@@ -11,6 +11,8 @@ class Answer < ApplicationRecord
   
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :votes, reject_if: :all_blank, allow_destroy: true
+  
+  after_create :notify_about_new_answer, on: :create
 
   scope :sort_by_best, -> { order(best: :desc) }
 
@@ -19,5 +21,9 @@ class Answer < ApplicationRecord
       question.answers.update_all(best: false)
       reload.update!(best: true)
     end
+  end
+
+  def notify_about_new_answer
+    NewAnswerNotificationJob.perform_later(self)
   end
 end
