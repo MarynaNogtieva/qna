@@ -49,13 +49,21 @@ gem 'cancancan'
 gem 'doorkeeper', '4.2.6'
 gem 'active_model_serializers', '~> 0.9.3'
 # helps convert to json much faster than regular to_json method
-gem 'oj' 
+gem 'oj'
 gem 'oj_mimic_json'
 gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', require: nil
 gem 'whenever', require: false
 # tasks that work well with sidekiq
 gem 'sidetiq'
+
+# if gem doesn't work, install from console
+# gem install mysql2 --  --with-mysql-dir=/usr/local/opt/mysql@5.6
+# be rake ts:configure
+# be rake ts:index
+# be rake ts:restart
+gem 'mysql2'
+gem 'thinking-sphinx'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
