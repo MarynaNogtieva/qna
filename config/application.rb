@@ -29,5 +29,9 @@ module Qna
                         controller_spec: true
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
+
+    config.after_initialize do |app|
+      app.config.paths.add 'app/presenters', :eager_load => true
+    end
   end
 end

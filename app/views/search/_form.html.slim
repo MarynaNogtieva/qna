@@ -1,0 +1,4 @@
+= form_for :search, url: search_path, method: :get do |f|
+  = f.text_field :query
+  = f.select :category, Search::SEARCHING_CATEGORIES, { include_blank: 'All' }, { class: 'form-control' }
+  = f.submit 'Search'

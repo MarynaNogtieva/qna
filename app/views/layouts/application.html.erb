@@ -8,14 +8,14 @@
     <title><%= content_for?(:title) ? yield(:title) : "QnA" %></title>
     <%= Gon::Base.render_data %>
     <%= csrf_meta_tags %>
-    
+
     <%= action_cable_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-   
+
    <nav class="navbar navbar-custom navbar-static-top"> 
     <div class="container"> <div class="navbar-header">
     <button type="button" class="collapsed navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-8" aria-expanded="false">
@@ -34,7 +34,7 @@
         <% if can?(:create, Question) %>
           <li>
             <%= link_to 'Ask question', new_question_path %>
-          </li> 
+          </li>
         <% end %>
         <li>
           <% if user_signed_in? %>
@@ -43,6 +43,9 @@
             <%= link_to 'Sign in', new_user_session_path %>
           <% end %>
         </li>
+         <li>
+           <%= render 'search/form' %>
+         </li>
       </ul>
 
       </div> 
