@@ -12,7 +12,6 @@ module Searches
       views = []
       if @search_results.present?
         @search_results.each do |result|
-          byebug
           views << generate_link(result)
         end
       else
@@ -23,19 +22,20 @@ module Searches
 
     def generate_link(result)
       rendered_view = ""
-      case result.class
-      when Question
-        rendered_view = h.render(partial: 'search/questions_search_result', locals: { result: result } )
-      when Answer
-         @view.link_to result.body, result.question
-      when User
-        result.email
-      when Comment
-        if result.commentable_type == 'Question'
-           @view.link_to result.body, question_path(result.commentable_id)
-        else
-          @view.link_to result.body, question_path(result.commentable.question)
-        end
+      klass_name = result.class.to_s
+      case klass_name
+        when "Question"
+          rendered_view = h.render(partial: 'search/questions_search_result', locals: { result: result } )
+        when "Answer"
+          rendered_view = h.render(partial: 'search/answers_search_result', locals: { result: result } )
+        when "User"
+          result.email
+        when "Comment"
+          if result.commentable_type == 'Question'
+            rendered_view = h.render(partial: 'search/question_comments_result', locals: { result: result } )
+          else
+            rendered_view = h.render(partial: 'search/answer_comments_result', locals: { result: result } )
+          end
       end
       rendered_view
     end

@@ -2,8 +2,8 @@ require '/Users/mnogtieva/Learning/thinknetica/qna/app/presenters/searches/searc
 class SearchController < ApplicationController
   skip_authorization_check 
   def search
-    result = Search.search(params[:search][:query], params[:search][:category])
-    @search_results = ::Searches::SearchPresenter.new(result, view_context)
+    @search_results = Search.search(params[:search][:query], params[:search][:category])
+    # @search_results = ::Searches::SearchPresenter.new(result, view_context)
     # respond_with(@search_results)
   end
 end
