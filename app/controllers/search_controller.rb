@@ -1,4 +1,5 @@
-require '/Users/mnogtieva/Learning/thinknetica/qna/app/presenters/searches/search_presernter.rb'
+# require '/Users/mnogtieva/Learning/thinknetica/qna/app/presenters/searches/search_presernter.rb'
+require "#{Rails.root}/app/presenters/searches/search_presernter.rb" 
 class SearchController < ApplicationController
   skip_authorization_check 
   def search
