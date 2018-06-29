@@ -26,3 +26,12 @@
 #   # because this will perform in a separate process
 #   runner 'DailyDigestJob.perform_now'
 # end
+
+
+every 1.minutes do
+  rake "thinking_sphinx:index"
+end
+
+every :reboot do
+  rake "thinking_sphinx:start"
+end

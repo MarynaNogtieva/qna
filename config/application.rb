@@ -14,6 +14,8 @@ module Qna
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
+    config.autoload_paths << Rails.root.join('presenters')
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -28,6 +30,10 @@ module Qna
                         request_specs: false,
                         controller_spec: true
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
+    end
+
+    config.after_initialize do |app|
+      app.config.paths.add 'app/presenters', :eager_load => true
     end
   end
 end

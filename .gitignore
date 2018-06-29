@@ -50,6 +50,9 @@ certs/
 # Ignore secrets
 /config/secrets.yml
 
+# Ignore thinking sphinx
+/config/thinking_sphinx.yml
+
 dump.rdb
 config/*.sphinx.conf
 db/sphinx

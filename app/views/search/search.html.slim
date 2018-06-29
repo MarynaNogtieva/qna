@@ -1,0 +1,6 @@
+h2 Search Results
+
+.results
+  ul
+  - present(@search_results, ::Searches::SearchPresenter) do |search_results_presenter|
+    = search_results_presenter.render_results

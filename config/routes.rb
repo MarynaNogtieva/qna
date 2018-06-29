@@ -46,4 +46,6 @@ Rails.application.routes.draw do
   
   # setup connection with the server
   mount ActionCable.server => '/cable'
+
+  get 'search', to: 'search#search'
 end
