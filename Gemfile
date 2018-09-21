@@ -32,6 +32,7 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'slim-rails'
 gem 'twitter-bootstrap-rails'
 gem 'jquery-rails'
@@ -64,6 +65,9 @@ gem 'sidetiq'
 # be rake ts:restart
 gem 'mysql2'
 gem 'thinking-sphinx'
+# gem 'dotenv'
+# gem 'dotenv-deployment', require: 'dotenv/deployment'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -88,6 +92,13 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  #===================CAPISTRANO===================
+  #put false so that code of these gems does not load when we start application
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
 end
 
 group :test do
