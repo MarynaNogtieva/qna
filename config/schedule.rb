@@ -35,3 +35,8 @@ end
 every :reboot do
   rake "thinking_sphinx:start"
 end
+
+every 60.minutes do
+  rake "ts:index"
+end
+
