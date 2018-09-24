@@ -13,3 +13,10 @@ development:
 test:
   <<: *default
   database: qna_test
+
+production:
+  <<: *default
+  database: qna_production
+  username: postgres
+  password: <%= ENV['QNA_DATABASE_PASSWORD'] %>
+  pool: 20
