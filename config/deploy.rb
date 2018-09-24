@@ -21,7 +21,7 @@ namespace :deploy do
   end
 
   after :publishing, :restart
-  after 'deploy:restart', 'thinking_sphinx:restart'
+  # after 'deploy:restart', 'thinking_sphinx:restart'
 end
 
 # Default branch is :master
