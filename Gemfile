@@ -67,7 +67,7 @@ gem 'mysql2'
 gem 'thinking-sphinx'
 # gem 'dotenv'
 # gem 'dotenv-deployment', require: 'dotenv/deployment'
-
+gem 'unicorn'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -83,6 +83,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'selenium-webdriver'
   gem 'letter_opener'
+  gem 'capistrano3-unicorn', require: false
 end
 
 group :development do
