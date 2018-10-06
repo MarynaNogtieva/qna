@@ -35,7 +35,6 @@ $(document).on('turbolinks:load',function() {
       var current_user_id = gon.current_user_id 
       console.log(data);
       if (data['commentable_type'] === 'question') {
-        
         $('.question-wrap').find('.all-comments').append(JST["templates/comment"](data)); 
       }
       else if (data['commentable_type'] === 'answer'){

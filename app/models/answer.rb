@@ -2,7 +2,7 @@ class Answer < ApplicationRecord
   include Voting
   include Commenting
   
-  belongs_to :question
+  belongs_to :question, touch: true
   belongs_to :user
   has_many :attachments, as: :attachable, dependent: :destroy
   has_many :votes, as: :votable, dependent: :destroy

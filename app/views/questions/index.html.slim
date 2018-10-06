@@ -1,6 +1,7 @@
 .container
   div.question-list
-    - @questions.each do |question|
-        .question-item
-          h4=  link_to question.title, question_path(question)
-          p= question.body
+    -cache collection_cache_key_for :question
+      - @questions.each do |question|
+          .question-item
+            h4=  link_to question.title, question_path(question)
+            p= question.body
